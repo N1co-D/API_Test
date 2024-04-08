@@ -54,22 +54,10 @@
             <artifactId>selenide</artifactId>
             <version>7.1.0</version>
         </dependency>
-
         <dependency>
             <groupId>io.rest-assured</groupId>
             <artifactId>rest-assured</artifactId>
             <version>5.4.0</version>
-<!--            <scope>test</scope>-->
-<!--            <exclusions>&lt;!&ndash; https://www.baeldung.com/maven-version-collision &ndash;&gt;-->
-<!--                <exclusion>-->
-<!--                    <groupId>org.apache.groovy</groupId>-->
-<!--                    <artifactId>groovy</artifactId>-->
-<!--                </exclusion>-->
-<!--                <exclusion>-->
-<!--                    <groupId>org.apache.groovy</groupId>-->
-<!--                    <artifactId>groovy-xml</artifactId>-->
-<!--                </exclusion>-->
-<!--            </exclusions>-->
         </dependency>
 
     </dependencies>
