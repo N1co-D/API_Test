@@ -16,11 +16,10 @@ public class PetStoreTestData {
     }
 
     static Stream<Arguments> checkPartialUpdatePetTestData() {
-        int currentId = 1;
-        int updatedId = 2;
+        int id = 1;
         String updatedName = "Kesha";
-        String jsonFilePath = "src/test/java/petstore/resources/pet.json";
-        return Stream.of(Arguments.of(currentId, updatedId, updatedName, jsonFilePath));
+        String updatedStatus = "sold";
+        return Stream.of(Arguments.of(id, updatedName, updatedStatus));
     }
 
     static Stream<Arguments> checkFullUpdatePetTestData() {

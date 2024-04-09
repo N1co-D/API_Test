@@ -94,11 +94,11 @@ public class PetFunctionality extends BasePage {
         }
     }
 
-    public PetFunctionality partialUpdatePet(int currentId, int updatedId, String name, String status) {
+    public PetFunctionality partialUpdatePet(int id, String name, String status) {
         Response response = given()
                 .baseUri(BASE_URL)
-                .pathParam("petId", currentId)
-                .queryParam("petId", updatedId)
+                .pathParam("petId", id)
+                .queryParam("petId", id)
                 .queryParam("name", name)
                 .queryParam("status", status)
                 .when()
