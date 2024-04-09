@@ -1,7 +1,6 @@
 package petstore;
 
 import io.qameta.allure.Description;
-import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -16,7 +15,6 @@ public class PetStoreTest {
     private final StoreFunctionality storeFunctionality = new StoreFunctionality();
     private final UserFunctionality userFunctionality = new UserFunctionality();
 
-    @Order(1)
     @Description("TC-ID1 Отправка запроса на добавление нового питомца")
     @ParameterizedTest
     @MethodSource("petstore.PetStoreTestData#checkAddNewPetTestData")
@@ -24,40 +22,43 @@ public class PetStoreTest {
         petFunctionality.addNewPet(jsonFilePath);
     }
 
-    @Order(2)
     @Description("TC-ID2 Отправка запроса на получение питомца по id")
     @ParameterizedTest
     @MethodSource("petstore.PetStoreTestData#checkFindPetByIdTestData")
-    public void checkFindPetById(int id) {
-        petFunctionality.findPetById(id);
+    public void checkFindPetById(String jsonFilePath, int id) throws IOException {
+        petFunctionality
+                .addNewPet(jsonFilePath)
+                .findPetById(id);
     }
 
-    @Order(3)
     @Description("TC-ID3 Отправка запроса на изменение имени и статуса питомца")
     @ParameterizedTest
     @MethodSource("petstore.PetStoreTestData#checkPartialUpdatePetTestData")
-    public void checkPartialUpdatePet(int id, String updatedName,
-                                      String updatedStatus) {
-        petFunctionality.partialUpdatePet(id, updatedName, updatedStatus);
+    public void checkPartialUpdatePet(String jsonFilePath, int id, String updatedName,
+                                      String updatedStatus) throws IOException {
+        petFunctionality
+                .addNewPet(jsonFilePath)
+                .partialUpdatePet(id, updatedName, updatedStatus);
     }
 
-    @Order(4)
     @Description("TC-ID4 Отправка запроса на изменение данных о питомце")
     @ParameterizedTest
     @MethodSource("petstore.PetStoreTestData#checkFullUpdatePetTestData")
-    public void checkFullUpdatePet(String jsonFilePath) throws IOException {
-        petFunctionality.fullUpdatePet(jsonFilePath);
+    public void checkFullUpdatePet(String jsonFilePath, String jsonFilePathToUpdate) throws IOException {
+        petFunctionality
+                .addNewPet(jsonFilePath)
+                .fullUpdatePet(jsonFilePathToUpdate);
     }
 
-    @Order(5)
     @Description("TC-ID5 Отправка запроса на удаление питомца по id")
     @ParameterizedTest
     @MethodSource("petstore.PetStoreTestData#checkDeletePetByIdTestData")
-    public void checkDeletePetById(int id) {
-        petFunctionality.deletePetById(id);
+    public void checkDeletePetById(String jsonFilePath, int id) throws IOException {
+        petFunctionality
+                .addNewPet(jsonFilePath)
+                .deletePetById(id);
     }
 
-    @Order(6)
     @Description("TC-ID6 Отправка запроса на получение всех питомцев по статусу")
     @ParameterizedTest
     @MethodSource("petstore.PetStoreTestData#checkFindPetByStatusTestData")
@@ -65,14 +66,12 @@ public class PetStoreTest {
         petFunctionality.findPetByStatus(status);
     }
 
-    @Order(7)
     @Description("TC-ID7 Отправка запроса на получение данных о количестве питомцев в инвентаре по статусам")
     @Test
     public void checkGetInventoryByStatus() {
         storeFunctionality.getInventoryByStatus();
     }
 
-    @Order(8)
     @Description("TC-ID8 Отправка запроса на добавление нового заказа")
     @ParameterizedTest
     @MethodSource("petstore.PetStoreTestData#checkAddNewOrderTestData")
@@ -80,23 +79,24 @@ public class PetStoreTest {
         storeFunctionality.addNewOrder(jsonFilePath);
     }
 
-    @Order(9)
     @Description("TC-ID9 Отправка запроса на получение заказа по id")
     @ParameterizedTest
     @MethodSource("petstore.PetStoreTestData#checkFindOrderByIdTestData")
-    public void checkFindOrderById(int id) {
-        storeFunctionality.findOrderById(id);
+    public void checkFindOrderById(String jsonFilePath, int id) throws IOException {
+        storeFunctionality
+                .addNewOrder(jsonFilePath)
+                .findOrderById(id);
     }
 
-    @Order(10)
     @Description("TC-ID10 Отправка запроса на удаление заказа по id")
     @ParameterizedTest
     @MethodSource("petstore.PetStoreTestData#checkDeleteOrderByIdTestData")
-    public void checkDeleteOrderById(int id) {
-        storeFunctionality.deleteOrderById(id);
+    public void checkDeleteOrderById(String jsonFilePath, int id) throws IOException {
+        storeFunctionality
+                .addNewOrder(jsonFilePath)
+                .deleteOrderById(id);
     }
 
-    @Order(11)
     @Description("TC-ID11 Отправка запроса на добавление нового пользователя")
     @ParameterizedTest
     @MethodSource("petstore.PetStoreTestData#checkCreateUserTestData")
@@ -104,7 +104,6 @@ public class PetStoreTest {
         userFunctionality.createUser(jsonFilePath);
     }
 
-    @Order(12)
     @Description("TC-ID12 Отправка запроса на добавление списка пользователей")
     @ParameterizedTest
     @MethodSource("petstore.PetStoreTestData#checkCreateUserListTestData")
@@ -112,42 +111,49 @@ public class PetStoreTest {
         userFunctionality.createUserList(jsonFilePath);
     }
 
-    @Order(13)
     @Description("TC-ID13 Отправка запроса на получение пользователя по логину")
     @ParameterizedTest
     @MethodSource("petstore.PetStoreTestData#checkGetUserByUsernameTestData")
-    public void checkGetUserByUsername(String username) {
-        userFunctionality.getUserByUsername(username);
+    public void checkGetUserByUsername(String jsonFilePath, String username) throws IOException {
+        userFunctionality
+                .createUser(jsonFilePath)
+                .getUserByUsername(username);
     }
 
-    @Order(14)
     @Description("TC-ID14 Отправка запроса на авторизацию пользователя")
     @ParameterizedTest
     @MethodSource("petstore.PetStoreTestData#checkLoginTestData")
-    public void checkLogin(String username, String password) {
-        userFunctionality.login(username, password);
+    public void checkLogin(String jsonFilePath, String username, String password) throws IOException {
+        userFunctionality
+                .createUser(jsonFilePath)
+                .login(username, password);
     }
 
-    @Order(15)
     @Description("TC-ID15 Отправка запроса на изменение данных пользователя")
     @ParameterizedTest
     @MethodSource("petstore.PetStoreTestData#checkUpdateUserTestData")
-    public void checkUpdateUser(String username, String jsonFilePath) throws IOException {
-        userFunctionality.updateUser(username, jsonFilePath);
+    public void checkUpdateUser(String jsonFilePath, String username, String jsonFilePathToUpdate) throws IOException {
+        userFunctionality
+                .createUser(jsonFilePath)
+                .updateUser(username, jsonFilePathToUpdate);
     }
 
-    @Order(16)
     @Description("TC-ID16 Отправка запроса на выход пользователя из системы")
-    @Test
-    public void checkLogout() {
-        userFunctionality.logout();
+    @ParameterizedTest
+    @MethodSource("petstore.PetStoreTestData#checkLogoutTestData")
+    public void checkLogout(String jsonFilePath, String username, String password) throws IOException {
+        userFunctionality
+                .createUser(jsonFilePath)
+                .login(username, password)
+                .logout();
     }
 
-    @Order(17)
     @Description("TC-ID17 Отправка запроса на удаление пользователя по логину")
     @ParameterizedTest
     @MethodSource("petstore.PetStoreTestData#checkDeleteUserByUsernameTestData")
-    public void checkDeleteUserByUsername(String username) {
-        userFunctionality.deleteUserByUsername(username);
+    public void checkDeleteUserByUsername(String jsonFilePath, String username) throws IOException {
+        userFunctionality
+                .createUser(jsonFilePath)
+                .deleteUserByUsername(username);
     }
 }

@@ -11,25 +11,29 @@ public class PetStoreTestData {
     }
 
     static Stream<Arguments> checkFindPetByIdTestData() {
+        String jsonFilePath = "src/test/java/petstore/resources/pet.json";
         int id = 1;
-        return Stream.of(Arguments.of(id));
+        return Stream.of(Arguments.of(jsonFilePath, id));
     }
 
     static Stream<Arguments> checkPartialUpdatePetTestData() {
+        String jsonFilePath = "src/test/java/petstore/resources/pet.json";
         int id = 1;
         String updatedName = "Kesha";
         String updatedStatus = "sold";
-        return Stream.of(Arguments.of(id, updatedName, updatedStatus));
+        return Stream.of(Arguments.of(jsonFilePath, id, updatedName, updatedStatus));
     }
 
     static Stream<Arguments> checkFullUpdatePetTestData() {
         String jsonFilePath = "src/test/java/petstore/resources/pet.json";
-        return Stream.of(Arguments.of(jsonFilePath));
+        String jsonFilePathToUpdate = "src/test/java/petstore/resources/updatepet.json";
+        return Stream.of(Arguments.of(jsonFilePath, jsonFilePathToUpdate));
     }
 
     static Stream<Arguments> checkDeletePetByIdTestData() {
+        String jsonFilePath = "src/test/java/petstore/resources/pet.json";
         int id = 1;
-        return Stream.of(Arguments.of(id));
+        return Stream.of(Arguments.of(jsonFilePath, id));
     }
 
     static Stream<Arguments> checkFindPetByStatusTestData() {
@@ -43,13 +47,15 @@ public class PetStoreTestData {
     }
 
     static Stream<Arguments> checkFindOrderByIdTestData() {
-        int id = 18121812;
-        return Stream.of(Arguments.of(id));
+        String jsonFilePath = "src/test/java/petstore/resources/order.json";
+        int id = 17031703;
+        return Stream.of(Arguments.of(jsonFilePath, id));
     }
 
     static Stream<Arguments> checkDeleteOrderByIdTestData() {
+        String jsonFilePath = "src/test/java/petstore/resources/order.json";
         int id = 17031703;
-        return Stream.of(Arguments.of(id));
+        return Stream.of(Arguments.of(jsonFilePath, id));
     }
 
     static Stream<Arguments> checkCreateUserTestData() {
@@ -63,24 +69,35 @@ public class PetStoreTestData {
     }
 
     static Stream<Arguments> checkGetUserByUsernameTestData() {
+        String jsonFilePath = "src/test/java/petstore/resources/user.json";
         String username = "string";
-        return Stream.of(Arguments.of(username));
+        return Stream.of(Arguments.of(jsonFilePath, username));
     }
 
     static Stream<Arguments> checkLoginTestData() {
+        String jsonFilePath = "src/test/java/petstore/resources/user.json";
         String username = "string";
         String password = "string";
-        return Stream.of(Arguments.of(username, password));
+        return Stream.of(Arguments.of(jsonFilePath, username, password));
     }
 
     static Stream<Arguments> checkUpdateUserTestData() {
+        String jsonFilePath = "src/test/java/petstore/resources/user.json";
         String username = "string";
-        String jsonFilePath = "src/test/java/petstore/resources/updateduser.json";
-        return Stream.of(Arguments.of(username, jsonFilePath));
+        String jsonFilePathToUpdate = "src/test/java/petstore/resources/updateduser.json";
+        return Stream.of(Arguments.of(jsonFilePath, username, jsonFilePathToUpdate));
+    }
+
+    static Stream<Arguments> checkLogoutTestData() {
+        String jsonFilePath = "src/test/java/petstore/resources/user.json";
+        String username = "string";
+        String password = "string";
+        return Stream.of(Arguments.of(jsonFilePath, username, password));
     }
 
     static Stream<Arguments> checkDeleteUserByUsernameTestData() {
+        String jsonFilePath = "src/test/java/petstore/resources/user.json";
         String username = "string";
-        return Stream.of(Arguments.of(username));
+        return Stream.of(Arguments.of(jsonFilePath, username));
     }
 }
