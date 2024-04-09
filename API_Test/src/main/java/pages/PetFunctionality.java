@@ -15,7 +15,7 @@ public class PetFunctionality extends BasePage {
     private static final String PET_STATUS = "/pet/findByStatus";
     private static final String NEW_PET = "/pet";
 
-    @Step
+    @Step("Отправка запроса на получение питомца по id = {id}")
     public PetFunctionality findPetById(int id) {
         Response response = given()
                 .baseUri(BASE_URL)
@@ -35,6 +35,7 @@ public class PetFunctionality extends BasePage {
         }
     }
 
+    @Step("Отправка запроса на удаление питомца по id = {id}")
     public PetFunctionality deletePetById(int id) {
         Response response = given()
                 .baseUri(BASE_URL)
@@ -54,6 +55,7 @@ public class PetFunctionality extends BasePage {
         }
     }
 
+    @Step("Отправка запроса на получение всех питомцев по статусу = {status}")
     public PetFunctionality findPetByStatus(String status) {
         Response response = given()
                 .baseUri(BASE_URL)
@@ -72,6 +74,7 @@ public class PetFunctionality extends BasePage {
         }
     }
 
+    @Step("Отправка запроса на добавление нового питомца")
     public PetFunctionality addNewPet(String jsonFilePath) throws IOException {
         String jsonString = new String(Files.readAllBytes(Paths.get(jsonFilePath)));
         Json json = new Json();
@@ -96,6 +99,7 @@ public class PetFunctionality extends BasePage {
         }
     }
 
+    @Step("Отправка запроса на изменение имени на {name} и статуса питомца на {status} через id = {id}")
     public PetFunctionality partialUpdatePet(int id, String name, String status) {
         Response response = given()
                 .baseUri(BASE_URL)
@@ -117,6 +121,7 @@ public class PetFunctionality extends BasePage {
         }
     }
 
+    @Step("Отправка запроса на полное изменение данных о питомце")
     public PetFunctionality fullUpdatePet(String jsonFilePath) throws IOException {
         String jsonString = new String(Files.readAllBytes(Paths.get(jsonFilePath)));
         Json json = new Json();

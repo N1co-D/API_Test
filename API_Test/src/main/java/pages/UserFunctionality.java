@@ -1,5 +1,6 @@
 package pages;
 
+import io.qameta.allure.Step;
 import io.restassured.response.Response;
 import org.openqa.selenium.json.Json;
 
@@ -16,6 +17,7 @@ public class UserFunctionality extends BasePage {
     private static final String USER_LIST = "/user/createWithList";
     private static final String USER = "/user";
 
+    @Step("Отправка запроса на получение пользователя по логину = {username}")
     public UserFunctionality getUserByUsername(String username) {
         Response response = given()
                 .baseUri(BASE_URL)
@@ -35,6 +37,7 @@ public class UserFunctionality extends BasePage {
         }
     }
 
+    @Step("Отправка запроса на авторизацию пользователя с логином = {username}")
     public UserFunctionality login(String username, String password) {
         Response response = given()
                 .baseUri(BASE_URL)
@@ -54,6 +57,7 @@ public class UserFunctionality extends BasePage {
         }
     }
 
+    @Step("Отправка запроса на выход пользователя из системы")
     public UserFunctionality logout() {
         Response response = given()
                 .baseUri(BASE_URL)
@@ -71,6 +75,7 @@ public class UserFunctionality extends BasePage {
         }
     }
 
+    @Step("Отправка запроса на удаление пользователя по логину = {username}")
     public UserFunctionality deleteUserByUsername(String username) {
         Response response = given()
                 .baseUri(BASE_URL)
@@ -90,6 +95,7 @@ public class UserFunctionality extends BasePage {
         }
     }
 
+    @Step("Отправка запроса на добавление списка пользователей")
     public UserFunctionality createUserList(String jsonFilePath) throws IOException {
         String jsonString = new String(Files.readAllBytes(Paths.get(jsonFilePath)));
         Json json = new Json();
@@ -114,6 +120,7 @@ public class UserFunctionality extends BasePage {
         }
     }
 
+    @Step("Отправка запроса на добавление нового пользователя")
     public UserFunctionality createUser(String jsonFilePath) throws IOException {
         String jsonString = new String(Files.readAllBytes(Paths.get(jsonFilePath)));
         Json json = new Json();
@@ -138,6 +145,7 @@ public class UserFunctionality extends BasePage {
         }
     }
 
+    @Step("Отправка запроса на изменение данных пользователя с логином {username}")
     public UserFunctionality updateUser(String username, String jsonFilePath) throws IOException {
         String jsonString = new String(Files.readAllBytes(Paths.get(jsonFilePath)));
         Json json = new Json();

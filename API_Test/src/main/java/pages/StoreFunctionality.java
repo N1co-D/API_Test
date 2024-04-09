@@ -1,5 +1,6 @@
 package pages;
 
+import io.qameta.allure.Step;
 import io.restassured.response.Response;
 import org.openqa.selenium.json.Json;
 
@@ -14,6 +15,7 @@ public class StoreFunctionality extends BasePage {
     private static final String ORDER_ID = "/store/order/{orderId}";
     private static final String NEW_ORDER = "/store/order";
 
+    @Step("Отправка запроса на получение данных о количестве питомцев в инвентаре по статусам")
     public StoreFunctionality getInventoryByStatus() {
         Response response = given()
                 .baseUri(BASE_URL)
@@ -31,6 +33,7 @@ public class StoreFunctionality extends BasePage {
         }
     }
 
+    @Step("Отправка запроса на получение заказа по id = {id}")
     public StoreFunctionality findOrderById(int id) {
         Response response = given()
                 .baseUri(BASE_URL)
@@ -50,6 +53,7 @@ public class StoreFunctionality extends BasePage {
         }
     }
 
+    @Step("Отправка запроса на удаление заказа по id = {id}")
     public StoreFunctionality deleteOrderById(int id) {
         Response response = given()
                 .baseUri(BASE_URL)
@@ -69,6 +73,7 @@ public class StoreFunctionality extends BasePage {
         }
     }
 
+    @Step("Отправка запроса на добавление нового заказа")
     public StoreFunctionality addNewOrder(String jsonFilePath) throws IOException {
         String jsonString = new String(Files.readAllBytes(Paths.get(jsonFilePath)));
         Json json = new Json();
