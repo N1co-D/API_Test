@@ -17,6 +17,7 @@ public class PetFunctionality extends BasePage {
     public PetFunctionality checkFindPetById(int id) {
         Response response = given()
                 .baseUri(BASE_URL)
+                .queryParam("petId", id)
                 .pathParam("id", id)
                 .when()
                 .get(PET_ID);
@@ -35,6 +36,7 @@ public class PetFunctionality extends BasePage {
     public PetFunctionality checkDeletePetById(int id) {
         Response response = given()
                 .baseUri(BASE_URL)
+                .queryParam("petId", id)
                 .pathParam("id", id)
                 .when()
                 .delete(PET_ID);
