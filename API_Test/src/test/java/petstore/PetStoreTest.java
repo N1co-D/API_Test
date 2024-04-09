@@ -17,7 +17,7 @@ public class PetStoreTest {
     private final UserFunctionality userFunctionality = new UserFunctionality();
 
     @Order(1)
-    @Description("Отправка запроса на добавление нового питомца")
+    @Description("TC-ID1 Отправка запроса на добавление нового питомца")
     @ParameterizedTest
     @MethodSource("petstore.PetStoreTestData#checkAddNewPetTestData")
     public void checkAddNewPet(String jsonFilePath) throws IOException {
@@ -25,7 +25,7 @@ public class PetStoreTest {
     }
 
     @Order(2)
-    @Description("Отправка запроса на получение питомца по id")
+    @Description("TC-ID2 Отправка запроса на получение питомца по id")
     @ParameterizedTest
     @MethodSource("petstore.PetStoreTestData#checkFindPetByIdTestData")
     public void checkFindPetById(int id) {
@@ -33,7 +33,7 @@ public class PetStoreTest {
     }
 
     @Order(3)
-    @Description("Отправка запроса на изменение имени и статуса питомца")
+    @Description("TC-ID3 Отправка запроса на изменение имени и статуса питомца")
     @ParameterizedTest
     @MethodSource("petstore.PetStoreTestData#checkPartialUpdatePetTestData")
     public void checkPartialUpdatePet(int id, String updatedName,
@@ -42,7 +42,7 @@ public class PetStoreTest {
     }
 
     @Order(4)
-    @Description("Отправка запроса на изменение данных о питомце")
+    @Description("TC-ID4 Отправка запроса на изменение данных о питомце")
     @ParameterizedTest
     @MethodSource("petstore.PetStoreTestData#checkFullUpdatePetTestData")
     public void checkFullUpdatePet(String jsonFilePath) throws IOException {
@@ -50,7 +50,7 @@ public class PetStoreTest {
     }
 
     @Order(5)
-    @Description("Отправка запроса на удаление питомца по id")
+    @Description("TC-ID5 Отправка запроса на удаление питомца по id")
     @ParameterizedTest
     @MethodSource("petstore.PetStoreTestData#checkDeletePetByIdTestData")
     public void checkDeletePetById(int id) {
@@ -58,7 +58,7 @@ public class PetStoreTest {
     }
 
     @Order(6)
-    @Description("Отправка запроса на получение всех питомцев по статусу")
+    @Description("TC-ID6 Отправка запроса на получение всех питомцев по статусу")
     @ParameterizedTest
     @MethodSource("petstore.PetStoreTestData#checkFindPetByStatusTestData")
     public void checkFindPetByStatus(String status) {
@@ -66,14 +66,14 @@ public class PetStoreTest {
     }
 
     @Order(7)
-    @Description("Отправка запроса на получение данных о количестве питомцев в инвентаре по статусам")
+    @Description("TC-ID7 Отправка запроса на получение данных о количестве питомцев в инвентаре по статусам")
     @Test
     public void checkGetInventoryByStatus() {
         storeFunctionality.getInventoryByStatus();
     }
 
     @Order(8)
-    @Description("Отправка запроса на добавление нового заказа")
+    @Description("TC-ID8 Отправка запроса на добавление нового заказа")
     @ParameterizedTest
     @MethodSource("petstore.PetStoreTestData#checkAddNewOrderTestData")
     public void checkAddNewOrder(String jsonFilePath) throws IOException {
@@ -81,7 +81,7 @@ public class PetStoreTest {
     }
 
     @Order(9)
-    @Description("Отправка запроса на получение заказа по id")
+    @Description("TC-ID9 Отправка запроса на получение заказа по id")
     @ParameterizedTest
     @MethodSource("petstore.PetStoreTestData#checkFindOrderByIdTestData")
     public void checkFindOrderById(int id) {
@@ -89,7 +89,7 @@ public class PetStoreTest {
     }
 
     @Order(10)
-    @Description("Отправка запроса на удаление заказа по id")
+    @Description("TC-ID10 Отправка запроса на удаление заказа по id")
     @ParameterizedTest
     @MethodSource("petstore.PetStoreTestData#checkDeleteOrderByIdTestData")
     public void checkDeleteOrderById(int id) {
@@ -97,7 +97,7 @@ public class PetStoreTest {
     }
 
     @Order(11)
-    @Description("Отправка запроса на добавление нового пользователя")
+    @Description("TC-ID11 Отправка запроса на добавление нового пользователя")
     @ParameterizedTest
     @MethodSource("petstore.PetStoreTestData#checkCreateUserTestData")
     public void checkCreateUser(String jsonFilePath) throws IOException {
@@ -105,7 +105,7 @@ public class PetStoreTest {
     }
 
     @Order(12)
-    @Description("Отправка запроса на добавление списка пользователей")
+    @Description("TC-ID12 Отправка запроса на добавление списка пользователей")
     @ParameterizedTest
     @MethodSource("petstore.PetStoreTestData#checkCreateUserListTestData")
     public void checkCreateUserList(String jsonFilePath) throws IOException {
@@ -113,7 +113,7 @@ public class PetStoreTest {
     }
 
     @Order(13)
-    @Description("Отправка запроса на получение пользователя по логину")
+    @Description("TC-ID13 Отправка запроса на получение пользователя по логину")
     @ParameterizedTest
     @MethodSource("petstore.PetStoreTestData#checkGetUserByUsernameTestData")
     public void checkGetUserByUsername(String username) {
@@ -121,7 +121,7 @@ public class PetStoreTest {
     }
 
     @Order(14)
-    @Description("Отправка запроса на авторизацию пользователя")
+    @Description("TC-ID14 Отправка запроса на авторизацию пользователя")
     @ParameterizedTest
     @MethodSource("petstore.PetStoreTestData#checkLoginTestData")
     public void checkLogin(String username, String password) {
@@ -129,7 +129,7 @@ public class PetStoreTest {
     }
 
     @Order(15)
-    @Description("Отправка запроса на изменение данных пользователя")
+    @Description("TC-ID15 Отправка запроса на изменение данных пользователя")
     @ParameterizedTest
     @MethodSource("petstore.PetStoreTestData#checkUpdateUserTestData")
     public void checkUpdateUser(String username, String jsonFilePath) throws IOException {
@@ -137,14 +137,14 @@ public class PetStoreTest {
     }
 
     @Order(16)
-    @Description("Отправка запроса на выход пользователя из системы")
+    @Description("TC-ID16 Отправка запроса на выход пользователя из системы")
     @Test
     public void checkLogout() {
         userFunctionality.logout();
     }
 
     @Order(17)
-    @Description("Отправка запроса на удаление пользователя по логину")
+    @Description("TC-ID17 Отправка запроса на удаление пользователя по логину")
     @ParameterizedTest
     @MethodSource("petstore.PetStoreTestData#checkDeleteUserByUsernameTestData")
     public void checkDeleteUserByUsername(String username) {
