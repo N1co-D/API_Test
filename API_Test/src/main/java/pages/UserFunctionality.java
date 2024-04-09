@@ -16,7 +16,7 @@ public class UserFunctionality extends BasePage {
     private static final String USER_LIST = "/user/createWithList";
     private static final String USER = "/user";
 
-    public UserFunctionality checkGetUserByUsername(String username) {
+    public UserFunctionality getUserByUsername(String username) {
         Response response = given()
                 .baseUri(BASE_URL)
                 .queryParam("username", username)
@@ -35,7 +35,7 @@ public class UserFunctionality extends BasePage {
         }
     }
 
-    public UserFunctionality checkLogin(String username, String password) {
+    public UserFunctionality login(String username, String password) {
         Response response = given()
                 .baseUri(BASE_URL)
                 .queryParam("username", username)
@@ -54,7 +54,7 @@ public class UserFunctionality extends BasePage {
         }
     }
 
-    public UserFunctionality checkReturnPetsByStatus() {
+    public UserFunctionality logout() {
         Response response = given()
                 .baseUri(BASE_URL)
                 .when()
@@ -71,7 +71,7 @@ public class UserFunctionality extends BasePage {
         }
     }
 
-    public UserFunctionality checkDeleteUserByUsername(String username) {
+    public UserFunctionality deleteUserByUsername(String username) {
         Response response = given()
                 .baseUri(BASE_URL)
                 .queryParam("username", username)
@@ -90,7 +90,7 @@ public class UserFunctionality extends BasePage {
         }
     }
 
-    public UserFunctionality checkCreateUserList(String jsonFilePath) throws IOException {
+    public UserFunctionality createUserList(String jsonFilePath) throws IOException {
         String jsonString = new String(Files.readAllBytes(Paths.get(jsonFilePath)));
         Json json = new Json();
         Object jsonObject = json.toType(jsonString, Object.class);
@@ -114,7 +114,7 @@ public class UserFunctionality extends BasePage {
         }
     }
 
-    public UserFunctionality checkCreateUser(String jsonFilePath) throws IOException {
+    public UserFunctionality createUser(String jsonFilePath) throws IOException {
         String jsonString = new String(Files.readAllBytes(Paths.get(jsonFilePath)));
         Json json = new Json();
         Object jsonObject = json.toType(jsonString, Object.class);
@@ -138,7 +138,7 @@ public class UserFunctionality extends BasePage {
         }
     }
 
-    public UserFunctionality checkUpdateUser(String username, String jsonFilePath) throws IOException {
+    public UserFunctionality updateUser(String username, String jsonFilePath) throws IOException {
         String jsonString = new String(Files.readAllBytes(Paths.get(jsonFilePath)));
         Json json = new Json();
         Object jsonObject = json.toType(jsonString, Object.class);
@@ -146,6 +146,7 @@ public class UserFunctionality extends BasePage {
 
         Response response = given()
                 .baseUri(BASE_URL)
+                .pathParam("username", username)
                 .header("Content-Type", "application/json")
                 .queryParam("username", username)
                 .body(jsonBody)

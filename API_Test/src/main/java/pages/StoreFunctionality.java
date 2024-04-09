@@ -11,10 +11,10 @@ import static io.restassured.RestAssured.given;
 
 public class StoreFunctionality extends BasePage {
     private static final String STORE_INVENTORY = "/store/inventory";
-    private static final String ORDER_ID = "/store/order/{id}";
+    private static final String ORDER_ID = "/store/order/{orderId}";
     private static final String NEW_ORDER = "/store/order";
 
-    public StoreFunctionality checkReturnPetsByStatus() {
+    public StoreFunctionality getInventoryByStatus() {
         Response response = given()
                 .baseUri(BASE_URL)
                 .when()
@@ -31,11 +31,11 @@ public class StoreFunctionality extends BasePage {
         }
     }
 
-    public StoreFunctionality checkFindOrderById(int id) {
+    public StoreFunctionality findOrderById(int id) {
         Response response = given()
                 .baseUri(BASE_URL)
                 .queryParam("orderId", id)
-                .pathParam("id", id)
+                .pathParam("orderId", id)
                 .when()
                 .get(ORDER_ID);
 
@@ -50,11 +50,11 @@ public class StoreFunctionality extends BasePage {
         }
     }
 
-    public StoreFunctionality checkDeleteOrderById(int id) {
+    public StoreFunctionality deleteOrderById(int id) {
         Response response = given()
                 .baseUri(BASE_URL)
                 .queryParam("orderId", id)
-                .pathParam("id", id)
+                .pathParam("orderId", id)
                 .when()
                 .delete(ORDER_ID);
 
@@ -69,7 +69,7 @@ public class StoreFunctionality extends BasePage {
         }
     }
 
-    public StoreFunctionality checkAddNewOrder(String jsonFilePath) throws IOException {
+    public StoreFunctionality addNewOrder(String jsonFilePath) throws IOException {
         String jsonString = new String(Files.readAllBytes(Paths.get(jsonFilePath)));
         Json json = new Json();
         Object jsonObject = json.toType(jsonString, Object.class);

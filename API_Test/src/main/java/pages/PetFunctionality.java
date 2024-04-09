@@ -10,15 +10,15 @@ import java.nio.file.Paths;
 import static io.restassured.RestAssured.given;
 
 public class PetFunctionality extends BasePage {
-    private static final String PET_ID = "/pet/{id}";
+    private static final String PET_ID = "/pet/{petId}";
     private static final String PET_STATUS = "/pet/findByStatus";
     private static final String NEW_PET = "/pet";
 
-    public PetFunctionality checkFindPetById(int id) {
+    public PetFunctionality findPetById(int id) {
         Response response = given()
                 .baseUri(BASE_URL)
                 .queryParam("petId", id)
-                .pathParam("id", id)
+                .pathParam("petId", id)
                 .when()
                 .get(PET_ID);
 
@@ -33,11 +33,11 @@ public class PetFunctionality extends BasePage {
         }
     }
 
-    public PetFunctionality checkDeletePetById(int id) {
+    public PetFunctionality deletePetById(int id) {
         Response response = given()
                 .baseUri(BASE_URL)
                 .queryParam("petId", id)
-                .pathParam("id", id)
+                .pathParam("petId", id)
                 .when()
                 .delete(PET_ID);
 
@@ -52,7 +52,7 @@ public class PetFunctionality extends BasePage {
         }
     }
 
-    public PetFunctionality checkFindPetByStatus(String status) {
+    public PetFunctionality findPetByStatus(String status) {
         Response response = given()
                 .baseUri(BASE_URL)
                 .queryParam("status", status)
@@ -70,7 +70,7 @@ public class PetFunctionality extends BasePage {
         }
     }
 
-    public PetFunctionality checkAddNewPet(String jsonFilePath) throws IOException {
+    public PetFunctionality addNewPet(String jsonFilePath) throws IOException {
         String jsonString = new String(Files.readAllBytes(Paths.get(jsonFilePath)));
         Json json = new Json();
         Object jsonObject = json.toType(jsonString, Object.class);
@@ -94,10 +94,10 @@ public class PetFunctionality extends BasePage {
         }
     }
 
-    public PetFunctionality checkUpdatePet(int currentId, int updatedId, String name, String status) {
+    public PetFunctionality partialUpdatePet(int currentId, int updatedId, String name, String status) {
         Response response = given()
                 .baseUri(BASE_URL)
-                .pathParam("id", currentId)
+                .pathParam("petId", currentId)
                 .queryParam("petId", updatedId)
                 .queryParam("name", name)
                 .queryParam("status", status)
@@ -115,7 +115,7 @@ public class PetFunctionality extends BasePage {
         }
     }
 
-    public PetFunctionality checkUpdatePet(String jsonFilePath) throws IOException {
+    public PetFunctionality fullUpdatePet(String jsonFilePath) throws IOException {
         String jsonString = new String(Files.readAllBytes(Paths.get(jsonFilePath)));
         Json json = new Json();
         Object jsonObject = json.toType(jsonString, Object.class);
