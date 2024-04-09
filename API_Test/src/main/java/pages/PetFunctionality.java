@@ -1,5 +1,6 @@
 package pages;
 
+import io.qameta.allure.Step;
 import io.restassured.response.Response;
 import org.openqa.selenium.json.Json;
 
@@ -14,6 +15,7 @@ public class PetFunctionality extends BasePage {
     private static final String PET_STATUS = "/pet/findByStatus";
     private static final String NEW_PET = "/pet";
 
+    @Step
     public PetFunctionality findPetById(int id) {
         Response response = given()
                 .baseUri(BASE_URL)
