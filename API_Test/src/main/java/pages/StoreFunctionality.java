@@ -56,7 +56,7 @@ public class StoreFunctionality extends BasePage {
                 .queryParam("orderId", id)
                 .pathParam("id", id)
                 .when()
-                .get(ORDER_ID);
+                .delete(ORDER_ID);
 
         if (response.getStatusCode() == 200) {
             response.then()
