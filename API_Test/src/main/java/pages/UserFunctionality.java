@@ -4,16 +4,17 @@ import io.restassured.response.Response;
 
 import static io.restassured.RestAssured.given;
 
-public class PetPage extends BasePage {
-    public static final String PET_ID = "/pet/{id}";
-    public static final String PET_STATUS = "/pet/findByStatus";
+public class UserFunctionality extends BasePage {
+    private static final String USER_USERNAME = "/user/{username}";
+    private static final String USER_LOGIN = "/user/login";
+    private static final String USER_LOGOUT = "/user/logout";
 
-    public PetPage checkFindPetById(int id) {
+    public UserFunctionality checkGetUserByUsername(String username) {
         Response response = given()
                 .baseUri(BASE_URL)
-                .pathParam("id", id)
+                .pathParam("username", username)
                 .when()
-                .get(PET_ID);
+                .get(USER_USERNAME);
 
         if (response.getStatusCode() == 200) {
             response.then()
@@ -21,17 +22,18 @@ public class PetPage extends BasePage {
                     .all();
             return this;
         } else {
-            throw new RuntimeException("Не удалось найти питомца по указанному id. " +
+            throw new RuntimeException("Не удалось пользователя по указанному имени. " +
                     "Статус ответа: " + response.getStatusCode());
         }
     }
 
-    public PetPage checkDeletePetById(int id) {
+    public UserFunctionality checkLogin(String username, String password) {
         Response response = given()
                 .baseUri(BASE_URL)
-                .pathParam("id", id)
+                .queryParam("username", username)
+                .queryParam("password", password)
                 .when()
-                .delete(PET_ID);
+                .get(USER_LOGIN);
 
         if (response.getStatusCode() == 200) {
             response.then()
@@ -39,17 +41,16 @@ public class PetPage extends BasePage {
                     .all();
             return this;
         } else {
-            throw new RuntimeException("Не удалось найти питомца по указанному id. " +
+            throw new RuntimeException("Авторизация не удалась. Проверьте вводимые данные " +
                     "Статус ответа: " + response.getStatusCode());
         }
     }
 
-    public PetPage checkFindPetByStatus(String status) {
+    public UserFunctionality checkReturnPetsByStatus() {
         Response response = given()
                 .baseUri(BASE_URL)
-                .queryParam("status", status)
                 .when()
-                .get(PET_STATUS);
+                .get(USER_LOGOUT);
 
         if (response.getStatusCode() == 200) {
             response.then()
@@ -57,7 +58,7 @@ public class PetPage extends BasePage {
                     .all();
             return this;
         } else {
-            throw new RuntimeException("Не удалось найти питомца по указанному статусу. " +
+            throw new RuntimeException("Не удалось выйти из системы. " +
                     "Статус ответа: " + response.getStatusCode());
         }
     }

@@ -4,11 +4,11 @@ import io.restassured.response.Response;
 
 import static io.restassured.RestAssured.given;
 
-public class StorePage extends BasePage {
-    public static final String STORE_INVENTORY = "/store/inventory";
-    public static final String ORDER_ID = "/store/order/{id}";
+public class StoreFunctionality extends BasePage {
+    private static final String STORE_INVENTORY = "/store/inventory";
+    private static final String ORDER_ID = "/store/order/{id}";
 
-    public StorePage checkReturnPetsByStatus() {
+    public StoreFunctionality checkReturnPetsByStatus() {
         Response response = given()
                 .baseUri(BASE_URL)
                 .when()
@@ -25,7 +25,7 @@ public class StorePage extends BasePage {
         }
     }
 
-    public StorePage checkFindOrderById(int id) {
+    public StoreFunctionality checkFindOrderById(int id) {
         Response response = given()
                 .baseUri(BASE_URL)
                 .pathParam("id", id)
