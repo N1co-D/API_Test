@@ -10,7 +10,7 @@ import java.nio.file.Paths;
 
 import static io.restassured.RestAssured.given;
 
-public class UserFunctionality extends BasePage {
+public class UserFunctionality extends BaseFunctionality {
     private static final String USER_USERNAME = "/user/{username}";
     private static final String USER_LOGIN = "/user/login";
     private static final String USER_LOGOUT = "/user/logout";

@@ -10,7 +10,7 @@ import java.nio.file.Paths;
 
 import static io.restassured.RestAssured.given;
 
-public class PetFunctionality extends BasePage {
+public class PetFunctionality extends BaseFunctionality {
     private static final String PET_ID = "/pet/{petId}";
     private static final String PET_STATUS = "/pet/findByStatus";
     private static final String NEW_PET = "/pet";

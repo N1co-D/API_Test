@@ -10,7 +10,7 @@ import java.nio.file.Paths;
 
 import static io.restassured.RestAssured.given;
 
-public class StoreFunctionality extends BasePage {
+public class StoreFunctionality extends BaseFunctionality {
     private static final String STORE_INVENTORY = "/store/inventory";
     private static final String ORDER_ID = "/store/order/{orderId}";
     private static final String NEW_ORDER = "/store/order";

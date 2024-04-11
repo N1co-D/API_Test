@@ -2,6 +2,6 @@ package pages;
 
 import utilites.ConfProperties;
 
-public class BasePage {
+public class BaseFunctionality {
     static final String BASE_URL = new ConfProperties().getProperty("base-url");
 }
