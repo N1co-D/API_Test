@@ -1,4 +1,4 @@
-package pages;
+package functionality;
 
 import io.qameta.allure.Step;
 import io.restassured.response.Response;

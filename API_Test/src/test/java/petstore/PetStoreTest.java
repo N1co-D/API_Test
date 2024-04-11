@@ -4,9 +4,9 @@ import io.qameta.allure.Description;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
-import pages.PetFunctionality;
-import pages.StoreFunctionality;
-import pages.UserFunctionality;
+import functionality.PetFunctionality;
+import functionality.StoreFunctionality;
+import functionality.UserFunctionality;
 
 import java.io.IOException;
 

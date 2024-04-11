@@ -1,4 +1,4 @@
-package pages;
+package functionality;
 
 import utilites.ConfProperties;
 
