@@ -1,4 +1,4 @@
-package utilites;
+package petstore.utilites;
 
 import java.io.FileInputStream;
 import java.io.IOException;
