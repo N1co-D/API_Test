@@ -162,7 +162,7 @@ public class PetStoreTestData {
      * TC-ID17
      */
     static Stream<Arguments> checkDeleteUserByUsernameTestData() throws JsonProcessingException {
-        username = "JavaDev";
+        username = "QATester4090";
         String userJson = userDataInJson(username);
         return Stream.of(Arguments.of(userJson));
     }
