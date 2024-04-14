@@ -40,7 +40,7 @@ public class UserFunctionality extends Endpoints {
                     .spec(responseSpecification);
             return this;
         } catch (AssertionError assertionError) {
-            throw new RuntimeException("Не удалось пользователя по указанному имени = " + username);
+            throw new RuntimeException("Не удалось получить пользователя по указанному имени = " + username);
         }
     }
 
