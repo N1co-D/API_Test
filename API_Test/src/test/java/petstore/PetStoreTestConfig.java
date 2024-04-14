@@ -11,9 +11,9 @@ public class PetStoreTestConfig extends PetStoreTestData {
     private static final String PET_ID = "/pet/{petId}";
     private static final String ORDER_ID = "/store/order/{orderId}";
     private static final String USER_USERNAME = "/user/{username}";
-    static boolean CLEAN_PET_AFTER_TEST = false;
-    static boolean CLEAN_ORDER_AFTER_TEST = false;
-    static boolean CLEAN_USER_AFTER_TEST = false;
+    static boolean CLEAN_PET_AFTER_TEST;
+    static boolean CLEAN_ORDER_AFTER_TEST;
+    static boolean CLEAN_USER_AFTER_TEST;
 
     @AfterEach
     public void clearPetTestData() {
