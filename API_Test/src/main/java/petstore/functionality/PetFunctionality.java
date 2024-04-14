@@ -16,8 +16,8 @@ public class PetFunctionality extends Endpoints {
     private boolean checkIfPetExistById(int petId) {
         Response response = given()
                 .spec(requestSpecification)
-                .queryParam("petId", petId)
                 .pathParam("petId", petId)
+                .param("petId", petId)
                 .when()
                 .get(PET_ID);
         response
@@ -32,8 +32,8 @@ public class PetFunctionality extends Endpoints {
         try {
             given()
                     .spec(requestSpecification)
-                    .queryParam("petId", petId)
                     .pathParam("petId", petId)
+                    .param("petId", petId)
                     .when()
                     .get(PET_ID)
                     .then()
@@ -49,8 +49,8 @@ public class PetFunctionality extends Endpoints {
         try {
             given()
                     .spec(requestSpecification)
-                    .queryParam("petId", petId)
                     .pathParam("petId", petId)
+                    .param("petId", petId)
                     .when()
                     .delete(PET_ID)
                     .then()
@@ -66,7 +66,7 @@ public class PetFunctionality extends Endpoints {
         try {
             given()
                     .spec(requestSpecification)
-                    .queryParam("status", status)
+                    .param("status", status)
                     .when()
                     .get(PET_STATUS)
                     .then()
@@ -104,9 +104,9 @@ public class PetFunctionality extends Endpoints {
             given()
                     .spec(requestSpecification)
                     .pathParam("petId", petId)
-                    .queryParam("petId", petId)
-                    .queryParam("name", name)
-                    .queryParam("status", status)
+                    .param("petId", petId)
+                    .param("name", name)
+                    .param("status", status)
                     .when()
                     .post(PET_ID)
                     .then()
@@ -139,8 +139,8 @@ public class PetFunctionality extends Endpoints {
         try {
             given()
                     .spec(requestSpecification)
-                    .queryParam("petId", petId)
                     .pathParam("petId", petId)
+                    .param("petId", petId)
                     .when()
                     .get(PET_ID)
                     .then()

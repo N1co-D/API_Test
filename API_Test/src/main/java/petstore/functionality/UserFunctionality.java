@@ -16,8 +16,8 @@ public class UserFunctionality extends Endpoints {
     private boolean checkIfUserExistByUsername(String username) {
         Response response = given()
                 .spec(requestSpecification)
-                .queryParam("username", username)
                 .pathParam("username", username)
+                .param("username", username)
                 .when()
                 .get(USER_USERNAME);
         response
@@ -32,8 +32,8 @@ public class UserFunctionality extends Endpoints {
         try {
             given()
                     .spec(requestSpecification)
-                    .queryParam("username", username)
                     .pathParam("username", username)
+                    .param("username", username)
                     .when()
                     .get(USER_USERNAME)
                     .then()
@@ -49,8 +49,8 @@ public class UserFunctionality extends Endpoints {
         try {
             given()
                     .spec(requestSpecification)
-                    .queryParam("username", username)
-                    .queryParam("password", password)
+                    .param("username", username)
+                    .param("password", password)
                     .when()
                     .get(USER_LOGIN)
                     .then()
@@ -81,8 +81,8 @@ public class UserFunctionality extends Endpoints {
         try {
             given()
                     .spec(requestSpecification)
-                    .queryParam("username", username)
                     .pathParam("username", username)
+                    .param("username", username)
                     .when()
                     .delete(USER_USERNAME)
                     .then()
@@ -137,7 +137,7 @@ public class UserFunctionality extends Endpoints {
             given()
                     .spec(requestSpecification)
                     .pathParam("username", username)
-//                    .queryParam("username", username)
+                    .param("username", username)
                     .contentType(JSON)
                     .body(userJson)
                     .log().all()
@@ -156,8 +156,8 @@ public class UserFunctionality extends Endpoints {
         try {
             given()
                     .spec(requestSpecification)
-                    .queryParam("username", username)
                     .pathParam("username", username)
+                    .param("username", username)
                     .when()
                     .get(USER_USERNAME)
                     .then()

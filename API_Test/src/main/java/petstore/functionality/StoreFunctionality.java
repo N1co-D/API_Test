@@ -16,8 +16,8 @@ public class StoreFunctionality extends Endpoints {
     private boolean checkIfOrderExistById(int orderId) {
         Response response = given()
                 .spec(requestSpecification)
-                .queryParam("orderId", orderId)
                 .pathParam("orderId", orderId)
+                .param("orderId", orderId)
                 .when()
                 .get(ORDER_ID);
         response
@@ -47,8 +47,8 @@ public class StoreFunctionality extends Endpoints {
         try {
             given()
                     .spec(requestSpecification)
-                    .queryParam("orderId", orderId)
                     .pathParam("orderId", orderId)
+                    .param("orderId", orderId)
                     .when()
                     .get(ORDER_ID)
                     .then()
@@ -64,8 +64,8 @@ public class StoreFunctionality extends Endpoints {
         try {
             given()
                     .spec(requestSpecification)
-                    .queryParam("orderId", orderId)
                     .pathParam("orderId", orderId)
+                    .param("orderId", orderId)
                     .when()
                     .delete(ORDER_ID)
                     .then()
@@ -102,8 +102,8 @@ public class StoreFunctionality extends Endpoints {
         try {
             given()
                     .spec(requestSpecification)
-                    .queryParam("orderId", orderId)
                     .pathParam("orderId", orderId)
+                    .param("orderId", orderId)
                     .when()
                     .get(ORDER_ID)
                     .then()
