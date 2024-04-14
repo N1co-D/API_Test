@@ -21,6 +21,7 @@
         <jackson.databind.version>2.17.0</jackson.databind.version>
         <lombok.version>1.18.32</lombok.version>
         <jackson.datatype.version>2.17.0</jackson.datatype.version>
+        <allure.rest.assured.version>2.27.0</allure.rest.assured.version>
     </properties>
 
     <dependencies>
@@ -71,6 +72,11 @@
             <groupId>com.fasterxml.jackson.datatype</groupId>
             <artifactId>jackson-datatype-jsr310</artifactId>
             <version>${jackson.datatype.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.qameta.allure</groupId>
+            <artifactId>allure-rest-assured</artifactId>
+            <version>${allure.rest.assured.version}</version>
         </dependency>
     </dependencies>
 

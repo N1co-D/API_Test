@@ -1,7 +1,10 @@
 package petstore;
 
+import io.qameta.allure.restassured.AllureRestAssured;
+import io.restassured.RestAssured;
 import io.restassured.specification.RequestSpecification;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import petstore.functionality.Endpoints;
 import petstore.specs.Specification;
 
@@ -12,6 +15,11 @@ public class PetStoreTestConfig extends PetStoreTestData {
     static boolean CLEAN_PET_AFTER_TEST;
     static boolean CLEAN_ORDER_AFTER_TEST;
     static boolean CLEAN_USER_AFTER_TEST;
+
+    @BeforeEach
+    public void setFilter(){
+        RestAssured.filters(new AllureRestAssured());
+    }
 
     @AfterEach
     public void clearPetTestData() {
