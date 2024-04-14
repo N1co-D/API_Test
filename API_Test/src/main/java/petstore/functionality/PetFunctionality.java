@@ -1,6 +1,7 @@
 package petstore.functionality;
 
 import io.qameta.allure.Step;
+import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import io.restassured.specification.ResponseSpecification;
 import petstore.specs.Specification;
@@ -15,37 +16,51 @@ public class PetFunctionality {
     private static final RequestSpecification requestSpecification = Specification.requestSpecification();
     private static final ResponseSpecification responseSpecification = Specification.responseSpecification();
 
+    private boolean checkIfPetExistById(int petId) {
+        Response response = given()
+                .spec(requestSpecification)
+                .queryParam("petId", petId)
+                .pathParam("petId", petId)
+                .when()
+                .get(PET_ID);
+        response
+                .then()
+                .log()
+                .status();
+        return response.getStatusCode() == 200;
+    }
+
     @Step("Отправка запроса на получение питомца по id = {id}")
-    public PetFunctionality findPetById(int id) {
+    public PetFunctionality findPetById(int petId) {
         try {
             given()
                     .spec(requestSpecification)
-                    .queryParam("petId", id)
-                    .pathParam("petId", id)
+                    .queryParam("petId", petId)
+                    .pathParam("petId", petId)
                     .when()
                     .get(PET_ID)
                     .then()
                     .spec(responseSpecification);
             return this;
         } catch (AssertionError assertionError) {
-            throw new RuntimeException("Не удалось найти питомца по заданному id = " + id);
+            throw new RuntimeException("Не удалось найти питомца по заданному id = " + petId);
         }
     }
 
-    @Step("Отправка запроса на удаление питомца по id = {id}")
-    public PetFunctionality deletePetById(int id) {
+    @Step("Отправка запроса на удаление питомца по id = {petId}")
+    public PetFunctionality deletePetById(int petId) {
         try {
             given()
                     .spec(requestSpecification)
-                    .queryParam("petId", id)
-                    .pathParam("petId", id)
+                    .queryParam("petId", petId)
+                    .pathParam("petId", petId)
                     .when()
                     .delete(PET_ID)
                     .then()
                     .spec(responseSpecification);
             return this;
         } catch (AssertionError assertionError) {
-            throw new RuntimeException("Не удалось удалить питомца по заданному id = " + id);
+            throw new RuntimeException("Не удалось удалить питомца по заданному id = " + petId);
         }
     }
 
@@ -66,29 +81,33 @@ public class PetFunctionality {
     }
 
     @Step("Отправка запроса на добавление нового питомца")
-    public PetFunctionality addNewPet(String petJson) {
-        try {
-            given()
-                    .spec(requestSpecification)
-                    .contentType(JSON)
-                    .body(petJson)
-                    .when()
-                    .post(NEW_PET)
-                    .then()
-                    .spec(responseSpecification);
-            return this;
-        } catch (AssertionError assertionError) {
-            throw new RuntimeException("Не удалось добавить питомца");
+    public PetFunctionality addNewPet(int id, String petJson) {
+        if (!checkIfPetExistById(id)) {
+            try {
+                given()
+                        .spec(requestSpecification)
+                        .contentType(JSON)
+                        .body(petJson)
+                        .when()
+                        .post(NEW_PET)
+                        .then()
+                        .spec(responseSpecification);
+                return this;
+            } catch (AssertionError assertionError) {
+                throw new RuntimeException("Не удалось добавить питомца");
+            }
+        } else {
+            throw new RuntimeException("Питомец с id = " + id + " уже существует");
         }
     }
 
-    @Step("Отправка запроса на изменение имени на {name} и статуса питомца на {status} через id = {id}")
-    public PetFunctionality partialUpdatePet(int id, String name, String status) {
+    @Step("Отправка запроса на изменение имени на {name} и статуса питомца на {status} через id = {petId}")
+    public PetFunctionality partialUpdatePet(int petId, String name, String status) {
         try {
             given()
                     .spec(requestSpecification)
-                    .pathParam("petId", id)
-                    .queryParam("petId", id)
+                    .pathParam("petId", petId)
+                    .queryParam("petId", petId)
                     .queryParam("name", name)
                     .queryParam("status", status)
                     .when()
@@ -115,6 +134,24 @@ public class PetFunctionality {
             return this;
         } catch (AssertionError assertionError) {
             throw new RuntimeException("Не удалось обновить данные о питомце");
+        }
+    }
+
+    @Step("Проверка отсутствия данных о питомце с id = {petId} по запросу")
+    public PetFunctionality checkNoDataAboutPet(int petId) {
+        try {
+            given()
+                    .spec(requestSpecification)
+                    .queryParam("petId", petId)
+                    .pathParam("petId", petId)
+                    .when()
+                    .get(PET_ID)
+                    .then()
+                    .log().status()
+                    .statusCode(404);
+            return this;
+        } catch (AssertionError assertionError) {
+            throw new RuntimeException("Питомец с заданным id = " + petId + " не был удален");
         }
     }
 }

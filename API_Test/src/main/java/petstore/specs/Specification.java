@@ -8,17 +8,18 @@ import io.restassured.specification.ResponseSpecification;
 import petstore.utilites.ConfProperties;
 
 public class Specification {
-
     public static RequestSpecification requestSpecification() {
         return new RequestSpecBuilder()
                 .setBaseUri(new ConfProperties().getProperty("base-url"))
                 .log(LogDetail.METHOD)
+                .log(LogDetail.BODY)
                 .build();
     }
 
     public static ResponseSpecification responseSpecification() {
         return new ResponseSpecBuilder()
-                .log(LogDetail.ALL)
+                .log(LogDetail.STATUS)
+                .log(LogDetail.BODY)
                 .expectStatusCode(200)
                 .build();
     }

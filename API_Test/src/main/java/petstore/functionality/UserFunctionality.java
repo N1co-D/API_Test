@@ -1,6 +1,7 @@
 package petstore.functionality;
 
 import io.qameta.allure.Step;
+import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import io.restassured.specification.ResponseSpecification;
 import petstore.specs.Specification;
@@ -16,6 +17,20 @@ public class UserFunctionality {
     private static final String NEW_USER = "/user";
     private static final RequestSpecification requestSpecification = Specification.requestSpecification();
     private static final ResponseSpecification responseSpecification = Specification.responseSpecification();
+
+    private boolean checkIfUserExistByUsername(String username) {
+        Response response = given()
+                .spec(requestSpecification)
+                .queryParam("username", username)
+                .pathParam("username", username)
+                .when()
+                .get(USER_USERNAME);
+        response
+                .then()
+                .log()
+                .status();
+        return response.getStatusCode() == 200;
+    }
 
     @Step("Отправка запроса на получение пользователя по логину = {username}")
     public UserFunctionality getUserByUsername(String username) {
@@ -101,19 +116,23 @@ public class UserFunctionality {
     }
 
     @Step("Отправка запроса на добавление нового пользователя")
-    public UserFunctionality createUser(String userJson) {
-        try {
-            given()
-                    .spec(requestSpecification)
-                    .contentType(JSON)
-                    .body(userJson)
-                    .when()
-                    .post(NEW_USER)
-                    .then()
-                    .spec(responseSpecification);
-            return this;
-        } catch (AssertionError assertionError) {
-            throw new RuntimeException("Не удалось добавить нового пользователя");
+    public UserFunctionality createUser(String username, String userJson) {
+        if (!checkIfUserExistByUsername(username)) {
+            try {
+                given()
+                        .spec(requestSpecification)
+                        .contentType(JSON)
+                        .body(userJson)
+                        .when()
+                        .post(NEW_USER)
+                        .then()
+                        .spec(responseSpecification);
+                return this;
+            } catch (AssertionError assertionError) {
+                throw new RuntimeException("Не удалось добавить нового пользователя");
+            }
+        } else {
+            throw new RuntimeException("Пользователь с логином = " + username + " уже существует");
         }
     }
 
@@ -123,9 +142,10 @@ public class UserFunctionality {
             given()
                     .spec(requestSpecification)
                     .pathParam("username", username)
-                    .queryParam("username", username)
+//                    .queryParam("username", username)
                     .contentType(JSON)
                     .body(userJson)
+                    .log().all()
                     .when()
                     .put(USER_USERNAME)
                     .then()
@@ -133,6 +153,24 @@ public class UserFunctionality {
             return this;
         } catch (AssertionError assertionError) {
             throw new RuntimeException("Не удалось обновить данные пользователя с логином = " + username);
+        }
+    }
+
+    @Step("Проверка отсутствия данных о пользователе с логином = {username} по запросу")
+    public UserFunctionality checkNoDataAboutUser(String username) {
+        try {
+            given()
+                    .spec(requestSpecification)
+                    .queryParam("username", username)
+                    .pathParam("username", username)
+                    .when()
+                    .get(USER_USERNAME)
+                    .then()
+                    .log().status()
+                    .statusCode(404);
+            return this;
+        } catch (AssertionError assertionError) {
+            throw new RuntimeException("Пользователь с заданным логином = " + username + " не был удален");
         }
     }
 }

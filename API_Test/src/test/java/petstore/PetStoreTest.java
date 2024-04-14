@@ -8,7 +8,7 @@ import petstore.functionality.PetFunctionality;
 import petstore.functionality.StoreFunctionality;
 import petstore.functionality.UserFunctionality;
 
-public class PetStoreTest {
+public class PetStoreTest extends PetStoreTestConfig {
     private final PetFunctionality petFunctionality = new PetFunctionality();
     private final StoreFunctionality storeFunctionality = new StoreFunctionality();
     private final UserFunctionality userFunctionality = new UserFunctionality();
@@ -17,44 +17,50 @@ public class PetStoreTest {
     @ParameterizedTest
     @MethodSource("petstore.PetStoreTestData#checkAddNewPetTestData")
     public void checkAddNewPet(String petJson) {
-        petFunctionality.addNewPet(petJson);
+        CLEAN_PET_AFTER_TEST = true;
+        petFunctionality.addNewPet(petId, petJson)
+                .findPetById(petId);
     }
 
     @Description("TC-ID2 Отправка запроса на получение питомца по id")
     @ParameterizedTest
     @MethodSource("petstore.PetStoreTestData#checkFindPetByIdTestData")
-    public void checkFindPetById(String petJson, int id) {
-        petFunctionality
-                .addNewPet(petJson)
-                .findPetById(id);
+    public void checkFindPetById(String petJson) {
+        CLEAN_PET_AFTER_TEST = true;
+        petFunctionality.addNewPet(petId, petJson)
+                .findPetById(petId);
     }
 
     @Description("TC-ID3 Отправка запроса на изменение имени и статуса питомца")
     @ParameterizedTest
     @MethodSource("petstore.PetStoreTestData#checkPartialUpdatePetTestData")
-    public void checkPartialUpdatePet(String petJson, int id, String updatedName,
-                                      String updatedStatus) {
+    public void checkPartialUpdatePet(String petJson, String updatedName, String updatedStatus) {
+        CLEAN_PET_AFTER_TEST = true;
         petFunctionality
-                .addNewPet(petJson)
-                .partialUpdatePet(id, updatedName, updatedStatus);
+                .addNewPet(petId, petJson)
+                .partialUpdatePet(petId, updatedName, updatedStatus)
+                .findPetById(petId);
     }
 
     @Description("TC-ID4 Отправка запроса на изменение данных о питомце")
     @ParameterizedTest
     @MethodSource("petstore.PetStoreTestData#checkFullUpdatePetTestData")
     public void checkFullUpdatePet(String petJson, String updatePetJson) {
+        CLEAN_PET_AFTER_TEST = true;
         petFunctionality
-                .addNewPet(petJson)
-                .fullUpdatePet(updatePetJson);
+                .addNewPet(petId, petJson)
+                .fullUpdatePet(updatePetJson)
+                .findPetById(petId);
     }
 
     @Description("TC-ID5 Отправка запроса на удаление питомца по id")
     @ParameterizedTest
     @MethodSource("petstore.PetStoreTestData#checkDeletePetByIdTestData")
-    public void checkDeletePetById(String petJson, int id) {
+    public void checkDeletePetById(String petJson) {
         petFunctionality
-                .addNewPet(petJson)
-                .deletePetById(id);
+                .addNewPet(petId, petJson)
+                .deletePetById(petId)
+                .checkNoDataAboutPet(petId);
     }
 
     @Description("TC-ID6 Отправка запроса на получение всех питомцев по статусу")
@@ -74,32 +80,37 @@ public class PetStoreTest {
     @ParameterizedTest
     @MethodSource("petstore.PetStoreTestData#checkAddNewOrderTestData")
     public void checkAddNewOrder(String orderJson) {
-        storeFunctionality.placeNewOrder(orderJson);
+        CLEAN_ORDER_AFTER_TEST = true;
+        storeFunctionality.placeNewOrder(orderId, orderJson)
+                .findOrderById(orderId);
     }
 
     @Description("TC-ID9 Отправка запроса на получение заказа по id")
     @ParameterizedTest
     @MethodSource("petstore.PetStoreTestData#checkFindOrderByIdTestData")
-    public void checkFindOrderById(String orderJson, int id) {
-        storeFunctionality
-                .placeNewOrder(orderJson)
-                .findOrderById(id);
+    public void checkFindOrderById(String orderJson) {
+        CLEAN_ORDER_AFTER_TEST = true;
+        storeFunctionality.placeNewOrder(orderId, orderJson)
+                .findOrderById(orderId);
     }
 
     @Description("TC-ID10 Отправка запроса на удаление заказа по id")
     @ParameterizedTest
     @MethodSource("petstore.PetStoreTestData#checkDeleteOrderByIdTestData")
-    public void checkDeleteOrderById(String orderJson, int id) {
+    public void checkDeleteOrderById(String orderJson) {
         storeFunctionality
-                .placeNewOrder(orderJson)
-                .deleteOrderById(id);
+                .placeNewOrder(orderId, orderJson)
+                .deleteOrderById(orderId)
+                .checkNoDataAboutOrder(orderId);
     }
 
     @Description("TC-ID11 Отправка запроса на добавление нового пользователя")
     @ParameterizedTest
     @MethodSource("petstore.PetStoreTestData#checkCreateUserTestData")
     public void checkCreateUser(String userJson) {
-        userFunctionality.createUser(userJson);
+        CLEAN_USER_AFTER_TEST = true;
+        userFunctionality.createUser(username, userJson)
+                .getUserByUsername(username);
     }
 
     @Description("TC-ID12 Отправка запроса на добавление списка пользователей")
@@ -112,36 +123,41 @@ public class PetStoreTest {
     @Description("TC-ID13 Отправка запроса на получение пользователя по логину")
     @ParameterizedTest
     @MethodSource("petstore.PetStoreTestData#checkGetUserByUsernameTestData")
-    public void checkGetUserByUsername(String userJson, String username) {
-        userFunctionality
-                .createUser(userJson)
+    public void checkGetUserByUsername(String userJson) {
+        CLEAN_USER_AFTER_TEST = true;
+        userFunctionality.createUser(username, userJson)
                 .getUserByUsername(username);
     }
 
     @Description("TC-ID14 Отправка запроса на авторизацию пользователя")
     @ParameterizedTest
     @MethodSource("petstore.PetStoreTestData#checkLoginTestData")
-    public void checkLogin(String userJson, String username, String password) {
+    public void checkLogin(String userJson, String password) {
+        CLEAN_USER_AFTER_TEST = true;
         userFunctionality
-                .createUser(userJson)
+                .createUser(username, userJson)
                 .login(username, password);
     }
 
     @Description("TC-ID15 Отправка запроса на изменение данных пользователя")
     @ParameterizedTest
     @MethodSource("petstore.PetStoreTestData#checkUpdateUserTestData")
-    public void checkUpdateUser(String userJson, String username, String updateUserJson) {
+    public void checkUpdateUser(String userJson, String password, String updateUserJson) {
+        CLEAN_USER_AFTER_TEST = true;
         userFunctionality
-                .createUser(userJson)
-                .updateUser(username, updateUserJson);
+                .createUser(username, userJson)
+                .login(username, password)
+                .updateUser(username, updateUserJson)
+                .getUserByUsername(username);
     }
 
     @Description("TC-ID16 Отправка запроса на выход пользователя из системы")
     @ParameterizedTest
     @MethodSource("petstore.PetStoreTestData#checkLogoutTestData")
-    public void checkLogout(String userJson, String username, String password) {
+    public void checkLogout(String userJson, String password) {
+        CLEAN_USER_AFTER_TEST = true;
         userFunctionality
-                .createUser(userJson)
+                .createUser(username, userJson)
                 .login(username, password)
                 .logout();
     }
@@ -149,9 +165,10 @@ public class PetStoreTest {
     @Description("TC-ID17 Отправка запроса на удаление пользователя по логину")
     @ParameterizedTest
     @MethodSource("petstore.PetStoreTestData#checkDeleteUserByUsernameTestData")
-    public void checkDeleteUserByUsername(String userJson, String username) {
+    public void checkDeleteUserByUsername(String userJson) {
         userFunctionality
-                .createUser(userJson)
-                .deleteUserByUsername(username);
+                .createUser(username, userJson)
+                .deleteUserByUsername(username)
+                .checkNoDataAboutUser(username);
     }
 }
