@@ -9,12 +9,7 @@ import petstore.specs.Specification;
 import static io.restassured.RestAssured.given;
 import static io.restassured.http.ContentType.JSON;
 
-public class UserFunctionality {
-    private static final String USER_USERNAME = "/user/{username}";
-    private static final String USER_LOGIN = "/user/login";
-    private static final String USER_LOGOUT = "/user/logout";
-    private static final String USER_LIST = "/user/createWithList";
-    private static final String NEW_USER = "/user";
+public class UserFunctionality extends Endpoints {
     private static final RequestSpecification requestSpecification = Specification.requestSpecification();
     private static final ResponseSpecification responseSpecification = Specification.responseSpecification();
 

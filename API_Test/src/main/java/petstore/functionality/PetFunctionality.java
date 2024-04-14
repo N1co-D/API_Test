@@ -9,10 +9,7 @@ import petstore.specs.Specification;
 import static io.restassured.RestAssured.given;
 import static io.restassured.http.ContentType.JSON;
 
-public class PetFunctionality {
-    private static final String PET_ID = "/pet/{petId}";
-    private static final String PET_STATUS = "/pet/findByStatus";
-    private static final String NEW_PET = "/pet";
+public class PetFunctionality extends Endpoints {
     private static final RequestSpecification requestSpecification = Specification.requestSpecification();
     private static final ResponseSpecification responseSpecification = Specification.responseSpecification();
 

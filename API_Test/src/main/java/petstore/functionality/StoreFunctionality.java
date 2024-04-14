@@ -9,10 +9,7 @@ import petstore.specs.Specification;
 import static io.restassured.RestAssured.given;
 import static io.restassured.http.ContentType.JSON;
 
-public class StoreFunctionality {
-    private static final String STORE_INVENTORY = "/store/inventory";
-    private static final String ORDER_ID = "/store/order/{orderId}";
-    private static final String NEW_ORDER = "/store/order";
+public class StoreFunctionality extends Endpoints {
     private static final RequestSpecification requestSpecification = Specification.requestSpecification();
     private static final ResponseSpecification responseSpecification = Specification.responseSpecification();
 

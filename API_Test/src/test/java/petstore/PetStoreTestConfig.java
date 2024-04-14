@@ -2,15 +2,13 @@ package petstore;
 
 import io.restassured.specification.RequestSpecification;
 import org.junit.jupiter.api.AfterEach;
+import petstore.functionality.Endpoints;
 import petstore.specs.Specification;
 
 import static io.restassured.RestAssured.given;
 
 public class PetStoreTestConfig extends PetStoreTestData {
     private static final RequestSpecification requestSpecification = Specification.requestSpecification();
-    private static final String PET_ID = "/pet/{petId}";
-    private static final String ORDER_ID = "/store/order/{orderId}";
-    private static final String USER_USERNAME = "/user/{username}";
     static boolean CLEAN_PET_AFTER_TEST;
     static boolean CLEAN_ORDER_AFTER_TEST;
     static boolean CLEAN_USER_AFTER_TEST;
@@ -24,7 +22,7 @@ public class PetStoreTestConfig extends PetStoreTestData {
                         .queryParam("petId", petId)
                         .pathParam("petId", petId)
                         .when()
-                        .delete(PET_ID)
+                        .delete(Endpoints.PET_ID)
                         .then()
                         .log().status();
             } catch (AssertionError assertionError) {
@@ -38,7 +36,7 @@ public class PetStoreTestConfig extends PetStoreTestData {
                         .queryParam("orderId", orderId)
                         .pathParam("orderId", orderId)
                         .when()
-                        .delete(ORDER_ID)
+                        .delete(Endpoints.ORDER_ID)
                         .then()
                         .log().status();
             } catch (AssertionError assertionError) {
@@ -52,7 +50,7 @@ public class PetStoreTestConfig extends PetStoreTestData {
                         .queryParam("username", username)
                         .pathParam("username", username)
                         .when()
-                        .delete(USER_USERNAME)
+                        .delete(Endpoints.USER_USERNAME)
                         .then()
                         .log().status();
             } catch (AssertionError assertionError) {
