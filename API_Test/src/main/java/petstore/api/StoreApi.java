@@ -4,10 +4,13 @@ import io.qameta.allure.Step;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import io.restassured.specification.ResponseSpecification;
+import org.junit.jupiter.api.Assertions;
+import petstore.data.order.Order;
 import petstore.specs.Specification;
 
 import static io.restassured.RestAssured.given;
 import static io.restassured.http.ContentType.JSON;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class StoreApi extends Endpoints {
     private static final RequestSpecification requestSpecification = Specification.requestSpecification();
@@ -36,10 +39,10 @@ public class StoreApi extends Endpoints {
                     .get(STORE_INVENTORY)
                     .then()
                     .spec(responseSpecification);
-            return this;
         } catch (AssertionError assertionError) {
             throw new RuntimeException("Не удалось открыть отфильтрованный по статусам инвентарь с питомцами");
         }
+        return this;
     }
 
     @Step("Отправка запроса на получение заказа по id = {orderId}")
@@ -53,10 +56,10 @@ public class StoreApi extends Endpoints {
                     .get(ORDER_ID)
                     .then()
                     .spec(responseSpecification);
-            return this;
         } catch (AssertionError assertionError) {
             throw new RuntimeException("Не удалось найти заказ по заданному id = " + orderId);
         }
+        return this;
     }
 
     @Step("Отправка запроса на удаление заказа по id = {orderId}")
@@ -70,10 +73,10 @@ public class StoreApi extends Endpoints {
                     .delete(ORDER_ID)
                     .then()
                     .spec(responseSpecification);
-            return this;
         } catch (AssertionError assertionError) {
             throw new RuntimeException("Не удалось удалить заказ по заданному id = " + orderId);
         }
+        return this;
     }
 
     @Step("Отправка запроса на добавление нового заказа")
@@ -88,13 +91,39 @@ public class StoreApi extends Endpoints {
                         .post(NEW_ORDER)
                         .then()
                         .spec(responseSpecification);
-                return this;
             } catch (AssertionError assertionError) {
                 throw new RuntimeException("Не удалось разместить заказ");
             }
         } else {
             throw new RuntimeException("Заказ с id = " + id + " уже существует");
         }
+        return this;
+    }
+
+    @Step("Проверка соответствия полей petId и status с ожидаемыми результатами = {expectedPetId} и {expectedStatus} соответственно")
+    public StoreApi checkOrderParameters(int orderId, int expectedPetId, String expectedStatus) {
+        try {
+            Order response = given()
+                    .spec(requestSpecification)
+                    .pathParam("orderId", orderId)
+                    .param("orderId", orderId)
+                    .when()
+                    .get(ORDER_ID)
+                    .then()
+                    .spec(responseSpecification)
+                    .extract().body().as(Order.class);
+            Assertions.assertAll(
+                    () -> assertEquals(expectedPetId, response.getPetId(),
+                            "Фактический petId заказа = " + response.getPetId() +
+                                    " не соответствует ожидаемому = " + expectedPetId),
+                    () -> assertEquals(expectedStatus, response.getStatus(),
+                            "Фактический статус заказа = " + response.getStatus() +
+                                    " не соответствует ожидаемому = " + expectedStatus)
+            );
+        } catch (AssertionError assertionError) {
+            throw new RuntimeException("Не удалось найти заказ по заданному id = " + orderId);
+        }
+        return this;
     }
 
     @Step("Проверка отсутствия данных о заказе с id = {orderId} по запросу")
@@ -109,9 +138,9 @@ public class StoreApi extends Endpoints {
                     .then()
                     .log().status()
                     .statusCode(404);
-            return this;
         } catch (AssertionError assertionError) {
             throw new RuntimeException("Заказ с заданным id = " + orderId + " не был удален");
         }
+        return this;
     }
 }

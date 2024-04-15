@@ -4,10 +4,13 @@ import io.qameta.allure.Step;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import io.restassured.specification.ResponseSpecification;
+import org.junit.jupiter.api.Assertions;
+import petstore.data.user.User;
 import petstore.specs.Specification;
 
 import static io.restassured.RestAssured.given;
 import static io.restassured.http.ContentType.JSON;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class UserApi extends Endpoints {
     private static final RequestSpecification requestSpecification = Specification.requestSpecification();
@@ -38,10 +41,10 @@ public class UserApi extends Endpoints {
                     .get(USER_USERNAME)
                     .then()
                     .spec(responseSpecification);
-            return this;
         } catch (AssertionError assertionError) {
             throw new RuntimeException("Не удалось получить пользователя по указанному имени = " + username);
         }
+        return this;
     }
 
     @Step("Отправка запроса на авторизацию пользователя с логином = {username}")
@@ -55,10 +58,10 @@ public class UserApi extends Endpoints {
                     .get(USER_LOGIN)
                     .then()
                     .spec(responseSpecification);
-            return this;
         } catch (AssertionError assertionError) {
             throw new RuntimeException("Авторизация пользователя с логином = " + username + " не удалась");
         }
+        return this;
     }
 
     @Step("Отправка запроса на выход пользователя из системы")
@@ -70,10 +73,10 @@ public class UserApi extends Endpoints {
                     .get(USER_LOGOUT)
                     .then()
                     .spec(responseSpecification);
-            return this;
         } catch (AssertionError assertionError) {
             throw new RuntimeException("Не удалось выйти из системы");
         }
+        return this;
     }
 
     @Step("Отправка запроса на удаление пользователя по логину = {username}")
@@ -87,10 +90,10 @@ public class UserApi extends Endpoints {
                     .delete(USER_USERNAME)
                     .then()
                     .spec(responseSpecification);
-            return this;
         } catch (AssertionError assertionError) {
             throw new RuntimeException("Не удалось удалить пользователя по указанному имени = " + username);
         }
+        return this;
     }
 
     @Step("Отправка запроса на добавление списка пользователей")
@@ -104,10 +107,10 @@ public class UserApi extends Endpoints {
                     .post(USER_LIST)
                     .then()
                     .spec(responseSpecification);
-            return this;
         } catch (AssertionError assertionError) {
             throw new RuntimeException("Не удалось создать список пользователей");
         }
+        return this;
     }
 
     @Step("Отправка запроса на добавление нового пользователя")
@@ -122,13 +125,13 @@ public class UserApi extends Endpoints {
                         .post(NEW_USER)
                         .then()
                         .spec(responseSpecification);
-                return this;
             } catch (AssertionError assertionError) {
                 throw new RuntimeException("Не удалось добавить нового пользователя");
             }
         } else {
             throw new RuntimeException("Пользователь с логином = " + username + " уже существует");
         }
+        return this;
     }
 
     @Step("Отправка запроса на изменение данных пользователя с логином {username}")
@@ -140,15 +143,40 @@ public class UserApi extends Endpoints {
                     .param("username", username)
                     .contentType(JSON)
                     .body(userJson)
-                    .log().all()
                     .when()
                     .put(USER_USERNAME)
                     .then()
                     .spec(responseSpecification);
-            return this;
         } catch (AssertionError assertionError) {
             throw new RuntimeException("Не удалось обновить данные пользователя с логином = " + username);
         }
+        return this;
+    }
+
+    @Step("Проверка соответствия полей firstName и email с ожидаемыми результатами = {expectedFirstName} и {expectedEmail} соответственно")
+    public UserApi checkUserParameters(String username, String expectedFirstName, String expectedEmail) {
+        try {
+            User response = given()
+                    .spec(requestSpecification)
+                    .pathParam("username", username)
+                    .param("username", username)
+                    .when()
+                    .get(USER_USERNAME)
+                    .then()
+                    .spec(responseSpecification)
+                    .extract().body().as(User.class);
+            Assertions.assertAll(
+                    () -> assertEquals(expectedFirstName, response.getFirstName(),
+                            "Фактическое имя пользователя = " + response.getFirstName() +
+                                    " не соответствует ожидаемому = " + expectedFirstName),
+                    () -> assertEquals(expectedEmail, response.getEmail(),
+                            "Фактическая электронная почта пользователя = " + response.getEmail() +
+                                    " не соответствует ожидаемой = " + expectedEmail)
+            );
+        } catch (AssertionError assertionError) {
+            throw new RuntimeException("Не удалось найти пользователя по заданному логину = " + username);
+        }
+        return this;
     }
 
     @Step("Проверка отсутствия данных о пользователе с логином = {username} по запросу")
@@ -163,9 +191,9 @@ public class UserApi extends Endpoints {
                     .then()
                     .log().status()
                     .statusCode(404);
-            return this;
         } catch (AssertionError assertionError) {
             throw new RuntimeException("Пользователь с заданным логином = " + username + " не был удален");
         }
+        return this;
     }
 }

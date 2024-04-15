@@ -4,10 +4,13 @@ import io.qameta.allure.Step;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import io.restassured.specification.ResponseSpecification;
+import org.junit.jupiter.api.Assertions;
+import petstore.data.pet.Pet;
 import petstore.specs.Specification;
 
 import static io.restassured.RestAssured.given;
 import static io.restassured.http.ContentType.JSON;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class PetApi extends Endpoints {
     private static final RequestSpecification requestSpecification = Specification.requestSpecification();
@@ -38,10 +41,10 @@ public class PetApi extends Endpoints {
                     .get(PET_ID)
                     .then()
                     .spec(responseSpecification);
-            return this;
         } catch (AssertionError assertionError) {
             throw new RuntimeException("Не удалось найти питомца по заданному id = " + petId);
         }
+        return this;
     }
 
     @Step("Отправка запроса на удаление питомца по id = {petId}")
@@ -55,10 +58,10 @@ public class PetApi extends Endpoints {
                     .delete(PET_ID)
                     .then()
                     .spec(responseSpecification);
-            return this;
         } catch (AssertionError assertionError) {
             throw new RuntimeException("Не удалось удалить питомца по заданному id = " + petId);
         }
+        return this;
     }
 
     @Step("Отправка запроса на получение всех питомцев по статусу = {status}")
@@ -71,10 +74,10 @@ public class PetApi extends Endpoints {
                     .get(PET_STATUS)
                     .then()
                     .spec(responseSpecification);
-            return this;
         } catch (AssertionError assertionError) {
             throw new RuntimeException("Не удалось найти питомца по заданному статусу = " + status);
         }
+        return this;
     }
 
     @Step("Отправка запроса на добавление нового питомца")
@@ -89,13 +92,13 @@ public class PetApi extends Endpoints {
                         .post(NEW_PET)
                         .then()
                         .spec(responseSpecification);
-                return this;
             } catch (AssertionError assertionError) {
                 throw new RuntimeException("Не удалось добавить питомца");
             }
         } else {
             throw new RuntimeException("Питомец с id = " + id + " уже существует");
         }
+        return this;
     }
 
     @Step("Отправка запроса на изменение имени на {name} и статуса питомца на {status} через id = {petId}")
@@ -111,10 +114,10 @@ public class PetApi extends Endpoints {
                     .post(PET_ID)
                     .then()
                     .spec(responseSpecification);
-            return this;
         } catch (AssertionError assertionError) {
             throw new RuntimeException("Не удалось обновить имя и статус питомца");
         }
+        return this;
     }
 
     @Step("Отправка запроса на полное изменение данных о питомце")
@@ -128,10 +131,34 @@ public class PetApi extends Endpoints {
                     .put(NEW_PET)
                     .then()
                     .spec(responseSpecification);
-            return this;
         } catch (AssertionError assertionError) {
             throw new RuntimeException("Не удалось обновить данные о питомце");
         }
+        return this;
+    }
+
+    @Step("Проверка соответствия полей name и status с ожидаемыми результатами = {expectedName} и {expectedStatus} соответственно")
+    public PetApi checkPetParameters(int petId, String expectedName, String expectedStatus) {
+        try {
+            Pet response = given()
+                    .spec(requestSpecification)
+                    .pathParam("petId", petId)
+                    .param("petId", petId)
+                    .when()
+                    .get(PET_ID)
+                    .then()
+                    .spec(responseSpecification)
+                    .extract().body().as(Pet.class);
+            Assertions.assertAll(
+                    () -> assertEquals(expectedName, response.getName(),
+                            "Фактическое имя питомца = " + response.getName() + " не соответствует ожидаемому = " + expectedName),
+                    () -> assertEquals(expectedStatus, response.getStatus(),
+                            "Фактический статус питомца = " + response.getStatus() + " не соответствует ожидаемому = " + expectedStatus)
+            );
+        } catch (AssertionError assertionError) {
+            throw new RuntimeException("Не удалось найти питомца по заданному id = " + petId);
+        }
+        return this;
     }
 
     @Step("Проверка отсутствия данных о питомце с id = {petId} по запросу")
@@ -146,9 +173,9 @@ public class PetApi extends Endpoints {
                     .then()
                     .log().status()
                     .statusCode(404);
-            return this;
         } catch (AssertionError assertionError) {
             throw new RuntimeException("Питомец с заданным id = " + petId + " не был удален");
         }
+        return this;
     }
 }

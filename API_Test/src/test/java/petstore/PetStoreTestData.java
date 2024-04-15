@@ -24,7 +24,9 @@ public class PetStoreTestData {
     static Stream<Arguments> checkAddNewPetTestData() throws JsonProcessingException {
         petId = 314314;
         String petJson = petData(petId);
-        return Stream.of(Arguments.of(petJson));
+        String expectedName = "doggie";
+        String expectedStatus = "available";
+        return Stream.of(Arguments.of(petJson, expectedName, expectedStatus));
     }
 
     /**
@@ -54,7 +56,9 @@ public class PetStoreTestData {
         petId = 314314;
         String petJson = petData(petId);
         String updatePetJson = updatePetData(petId);
-        return Stream.of(Arguments.of(petJson, updatePetJson));
+        String expectedName = "boris";
+        String expectedStatus = "sold";
+        return Stream.of(Arguments.of(petJson, updatePetJson, expectedName, expectedStatus));
     }
 
     /**
@@ -67,20 +71,14 @@ public class PetStoreTestData {
     }
 
     /**
-     * TC-ID6
-     */
-    static Stream<Arguments> checkFindPetByStatusTestData() {
-        String status = "sold";
-        return Stream.of(Arguments.of(status));
-    }
-
-    /**
      * TC-ID8
      */
     static Stream<Arguments> checkAddNewOrderTestData() throws JsonProcessingException {
         orderId = 17031703;
         String orderJson = orderData(orderId);
-        return Stream.of(Arguments.of(orderJson));
+        int expectedPetId = 0;
+        String expectedStatus = "placed";
+        return Stream.of(Arguments.of(orderJson, expectedPetId, expectedStatus));
     }
 
     /**
@@ -107,7 +105,9 @@ public class PetStoreTestData {
     static Stream<Arguments> checkCreateUserTestData() throws JsonProcessingException {
         username = "MarkevichD";
         String userJson = userData(username);
-        return Stream.of(Arguments.of(userJson));
+        String expectedFirstName = "Vladimir";
+        String expectedEmail = "java@mail.ru";
+        return Stream.of(Arguments.of(userJson, expectedFirstName, expectedEmail));
     }
 
     /**
@@ -144,8 +144,11 @@ public class PetStoreTestData {
         username = "MarkevichD";
         String userJson = userData(username);
         String password = "password";
-        String updateUserJson = updateUserData(username);
-        return Stream.of(Arguments.of(userJson, password, updateUserJson));
+        String updateUsername = "DaniilM";
+        String updateUserJson = updateUserData(updateUsername);
+        String expectedFirstName = "Daniil";
+        String expectedEmail = "qa@test.com";
+        return Stream.of(Arguments.of(userJson, password, updateUsername, updateUserJson, expectedFirstName, expectedEmail));
     }
 
     /**
@@ -164,7 +167,7 @@ public class PetStoreTestData {
     static Stream<Arguments> checkDeleteUserByUsernameTestData() throws JsonProcessingException {
         username = "QATester4090";
         String userJson = userData(username);
-        return Stream.of(Arguments.of(userJson));
+        return Stream.of(Arguments.of(username, userJson));
     }
 
     private static String petData(int petId) throws JsonProcessingException {
@@ -189,19 +192,19 @@ public class PetStoreTestData {
     }
 
     private static String userData(String username) throws JsonProcessingException {
-        User user = new User(0, username, "string", "string", "email", "password", "string", 0);
+        User user = new User(0L, username, "Vladimir", "Ivanov", "java@mail.ru", "password", "string", 0);
         return turnObjectIntoJson(user);
     }
 
     private static String updateUserData(String username) throws JsonProcessingException {
-        User user = new User(0, username, "Daniil", "Markevich", "email", "password", "string", 0);
+        User user = new User(0L, username, "Daniil", "Markevich", "qa@test.com", "password", "string", 0);
         return turnObjectIntoJson(user);
     }
 
     private static String userListData() throws JsonProcessingException {
         List<User> users = new ArrayList<>();
-        users.add(new User(101101, "Alex", "Alex", "Petrov", "email", "password", "string", 0));
-        users.add(new User(202202, "Max", "Max", "Ivanov", "email", "password", "string", 0));
+        users.add(new User(101101L, "Alex", "Alex", "Petrov", "email", "password", "string", 0));
+        users.add(new User(202202L, "Max", "Max", "Ivanov", "email", "password", "string", 0));
         return turnObjectIntoJson(users);
     }
 

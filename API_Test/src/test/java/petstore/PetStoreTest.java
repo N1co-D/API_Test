@@ -4,6 +4,7 @@ import io.qameta.allure.Description;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.params.provider.ValueSource;
 import petstore.api.PetApi;
 import petstore.api.StoreApi;
 import petstore.api.UserApi;
@@ -16,10 +17,10 @@ public class PetStoreTest extends PetStoreTestConfig {
     @Description("TC-ID1 Отправка запроса на добавление нового питомца")
     @ParameterizedTest
     @MethodSource("petstore.PetStoreTestData#checkAddNewPetTestData")
-    public void checkAddNewPet(String petJson) {
+    public void checkAddNewPet(String petJson, String expectedName, String expectedStatus) {
         CLEAN_PET_AFTER_TEST = true;
         petFunctionality.addNewPet(petId, petJson)
-                .findPetById(petId);
+                .checkPetParameters(petId, expectedName, expectedStatus);
     }
 
     @Description("TC-ID2 Отправка запроса на получение питомца по id")
@@ -39,18 +40,18 @@ public class PetStoreTest extends PetStoreTestConfig {
         petFunctionality
                 .addNewPet(petId, petJson)
                 .partialUpdatePet(petId, updatedName, updatedStatus)
-                .findPetById(petId);
+                .checkPetParameters(petId, updatedName, updatedStatus);
     }
 
     @Description("TC-ID4 Отправка запроса на изменение данных о питомце")
     @ParameterizedTest
     @MethodSource("petstore.PetStoreTestData#checkFullUpdatePetTestData")
-    public void checkFullUpdatePet(String petJson, String updatePetJson) {
+    public void checkFullUpdatePet(String petJson, String updatePetJson, String expectedName, String expectedStatus) {
         CLEAN_PET_AFTER_TEST = true;
         petFunctionality
                 .addNewPet(petId, petJson)
                 .fullUpdatePet(updatePetJson)
-                .findPetById(petId);
+                .checkPetParameters(petId, expectedName, expectedStatus);
     }
 
     @Description("TC-ID5 Отправка запроса на удаление питомца по id")
@@ -65,7 +66,7 @@ public class PetStoreTest extends PetStoreTestConfig {
 
     @Description("TC-ID6 Отправка запроса на получение всех питомцев по статусу")
     @ParameterizedTest
-    @MethodSource("petstore.PetStoreTestData#checkFindPetByStatusTestData")
+    @ValueSource(strings = {"available", "pending", "sold"})
     public void checkFindPetByStatus(String status) {
         petFunctionality.findPetByStatus(status);
     }
@@ -79,10 +80,10 @@ public class PetStoreTest extends PetStoreTestConfig {
     @Description("TC-ID8 Отправка запроса на добавление нового заказа")
     @ParameterizedTest
     @MethodSource("petstore.PetStoreTestData#checkAddNewOrderTestData")
-    public void checkAddNewOrder(String orderJson) {
+    public void checkAddNewOrder(String orderJson, int expectedPetId, String expectedStatus) {
         CLEAN_ORDER_AFTER_TEST = true;
         storeFunctionality.placeNewOrder(orderId, orderJson)
-                .findOrderById(orderId);
+                .checkOrderParameters(orderId, expectedPetId, expectedStatus);
     }
 
     @Description("TC-ID9 Отправка запроса на получение заказа по id")
@@ -107,10 +108,10 @@ public class PetStoreTest extends PetStoreTestConfig {
     @Description("TC-ID11 Отправка запроса на добавление нового пользователя")
     @ParameterizedTest
     @MethodSource("petstore.PetStoreTestData#checkCreateUserTestData")
-    public void checkCreateUser(String userJson) {
+    public void checkCreateUser(String userJson, String expectedFirstName, String expectedEmail) {
         CLEAN_USER_AFTER_TEST = true;
         userFunctionality.createUser(username, userJson)
-                .getUserByUsername(username);
+                .checkUserParameters(username, expectedFirstName, expectedEmail);
     }
 
     @Description("TC-ID12 Отправка запроса на добавление списка пользователей")
@@ -142,13 +143,14 @@ public class PetStoreTest extends PetStoreTestConfig {
     @Description("TC-ID15 Отправка запроса на изменение данных пользователя")
     @ParameterizedTest
     @MethodSource("petstore.PetStoreTestData#checkUpdateUserTestData")
-    public void checkUpdateUser(String userJson, String password, String updateUserJson) {
+    public void checkUpdateUser(String userJson, String password, String updateUsername, String updateUserJson,
+                                String expectedFirstName, String expectedEmail) {
         CLEAN_USER_AFTER_TEST = true;
         userFunctionality
                 .createUser(username, userJson)
                 .login(username, password)
-                .updateUser(username, updateUserJson)
-                .getUserByUsername(username);
+                .updateUser(updateUsername, updateUserJson)
+                .checkUserParameters(updateUsername, expectedFirstName, expectedEmail);
     }
 
     @Description("TC-ID16 Отправка запроса на выход пользователя из системы")
@@ -165,7 +167,7 @@ public class PetStoreTest extends PetStoreTestConfig {
     @Description("TC-ID17 Отправка запроса на удаление пользователя по логину")
     @ParameterizedTest
     @MethodSource("petstore.PetStoreTestData#checkDeleteUserByUsernameTestData")
-    public void checkDeleteUserByUsername(String userJson) {
+    public void checkDeleteUserByUsername(String username, String userJson) {
         userFunctionality
                 .createUser(username, userJson)
                 .deleteUserByUsername(username)
