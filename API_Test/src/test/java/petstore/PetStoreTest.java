@@ -6,12 +6,12 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import petstore.api.PetApi;
 import petstore.api.StoreApi;
-import petstore.api.UserAPI;
+import petstore.api.UserApi;
 
 public class PetStoreTest extends PetStoreTestConfig {
     private final PetApi petFunctionality = new PetApi();
     private final StoreApi storeFunctionality = new StoreApi();
-    private final UserAPI userFunctionality = new UserAPI();
+    private final UserApi userFunctionality = new UserApi();
 
     @Description("TC-ID1 Отправка запроса на добавление нового питомца")
     @ParameterizedTest
