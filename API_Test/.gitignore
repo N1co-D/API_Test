@@ -11,3 +11,4 @@ compiler.xml
 /uiDesigner.xml
 
 /.allure/
+/src/main/java/PetShopPage.java
