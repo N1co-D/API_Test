@@ -9,7 +9,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Tags {
+public class Tag {
     private Integer id;
     private String name;
 }

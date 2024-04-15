@@ -6,7 +6,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import petstore.data.order.Order;
 import petstore.data.pet.Category;
 import petstore.data.pet.Pet;
-import petstore.data.pet.Tags;
+import petstore.data.pet.Tag;
 import petstore.data.user.User;
 
 import java.util.ArrayList;
@@ -169,7 +169,7 @@ public class PetStoreTestData {
 
     private static String petData(int petId) throws JsonProcessingException {
         List<String> photoUrls = new ArrayList<>(List.of("string"));
-        List<Tags> tags = List.of(new Tags(0, "string"));
+        List<Tag> tags = List.of(new Tag(0, "string"));
         Category category = new Category(0, "string");
         Pet pet = new Pet(petId, category, "doggie", photoUrls, tags, "available");
         return turnObjectIntoJson(pet);
@@ -177,7 +177,7 @@ public class PetStoreTestData {
 
     private static String updatePetData(int petId) throws JsonProcessingException {
         List<String> photoUrls = new ArrayList<>(List.of("string"));
-        List<Tags> tags = List.of(new Tags(0, "string"));
+        List<Tag> tags = List.of(new Tag(0, "string"));
         Category category = new Category(0, "string");
         Pet pet = new Pet(petId, category, "boris", photoUrls, tags, "sold");
         return turnObjectIntoJson(pet);

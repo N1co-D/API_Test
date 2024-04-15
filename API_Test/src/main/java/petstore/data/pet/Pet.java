@@ -16,6 +16,6 @@ public class Pet {
     private Category category;
     private String name;
     private List<String> photoUrls;
-    private List<Tags> tags;
+    private List<Tag> tags;
     private String status;
 }
