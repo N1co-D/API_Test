@@ -17,7 +17,7 @@ public class PetStoreTestConfig extends PetStoreTestData {
     static boolean CLEAN_USER_AFTER_TEST;
 
     @BeforeEach
-    public void setFilter(){
+    public void setFilter() {
         RestAssured.filters(new AllureRestAssured());
     }
 
