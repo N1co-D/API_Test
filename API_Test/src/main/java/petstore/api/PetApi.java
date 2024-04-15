@@ -1,4 +1,4 @@
-package petstore.functionality;
+package petstore.api;
 
 import io.qameta.allure.Step;
 import io.restassured.response.Response;
@@ -9,7 +9,7 @@ import petstore.specs.Specification;
 import static io.restassured.RestAssured.given;
 import static io.restassured.http.ContentType.JSON;
 
-public class PetFunctionality extends Endpoints {
+public class PetApi extends Endpoints {
     private static final RequestSpecification requestSpecification = Specification.requestSpecification();
     private static final ResponseSpecification responseSpecification = Specification.responseSpecification();
 
@@ -28,7 +28,7 @@ public class PetFunctionality extends Endpoints {
     }
 
     @Step("Отправка запроса на получение питомца по id = {id}")
-    public PetFunctionality findPetById(int petId) {
+    public PetApi findPetById(int petId) {
         try {
             given()
                     .spec(requestSpecification)
@@ -45,7 +45,7 @@ public class PetFunctionality extends Endpoints {
     }
 
     @Step("Отправка запроса на удаление питомца по id = {petId}")
-    public PetFunctionality deletePetById(int petId) {
+    public PetApi deletePetById(int petId) {
         try {
             given()
                     .spec(requestSpecification)
@@ -62,7 +62,7 @@ public class PetFunctionality extends Endpoints {
     }
 
     @Step("Отправка запроса на получение всех питомцев по статусу = {status}")
-    public PetFunctionality findPetByStatus(String status) {
+    public PetApi findPetByStatus(String status) {
         try {
             given()
                     .spec(requestSpecification)
@@ -78,7 +78,7 @@ public class PetFunctionality extends Endpoints {
     }
 
     @Step("Отправка запроса на добавление нового питомца")
-    public PetFunctionality addNewPet(int id, String petJson) {
+    public PetApi addNewPet(int id, String petJson) {
         if (!checkIfPetExistById(id)) {
             try {
                 given()
@@ -99,7 +99,7 @@ public class PetFunctionality extends Endpoints {
     }
 
     @Step("Отправка запроса на изменение имени на {name} и статуса питомца на {status} через id = {petId}")
-    public PetFunctionality partialUpdatePet(int petId, String name, String status) {
+    public PetApi partialUpdatePet(int petId, String name, String status) {
         try {
             given()
                     .spec(requestSpecification)
@@ -118,7 +118,7 @@ public class PetFunctionality extends Endpoints {
     }
 
     @Step("Отправка запроса на полное изменение данных о питомце")
-    public PetFunctionality fullUpdatePet(String petJson) {
+    public PetApi fullUpdatePet(String petJson) {
         try {
             given()
                     .spec(requestSpecification)
@@ -135,7 +135,7 @@ public class PetFunctionality extends Endpoints {
     }
 
     @Step("Проверка отсутствия данных о питомце с id = {petId} по запросу")
-    public PetFunctionality checkNoDataAboutPet(int petId) {
+    public PetApi checkNoDataAboutPet(int petId) {
         try {
             given()
                     .spec(requestSpecification)

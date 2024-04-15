@@ -1,4 +1,4 @@
-package petstore.functionality;
+package petstore.api;
 
 import io.qameta.allure.Step;
 import io.restassured.response.Response;
@@ -9,7 +9,7 @@ import petstore.specs.Specification;
 import static io.restassured.RestAssured.given;
 import static io.restassured.http.ContentType.JSON;
 
-public class UserFunctionality extends Endpoints {
+public class UserApi extends Endpoints {
     private static final RequestSpecification requestSpecification = Specification.requestSpecification();
     private static final ResponseSpecification responseSpecification = Specification.responseSpecification();
 
@@ -28,7 +28,7 @@ public class UserFunctionality extends Endpoints {
     }
 
     @Step("Отправка запроса на получение пользователя по логину = {username}")
-    public UserFunctionality getUserByUsername(String username) {
+    public UserApi getUserByUsername(String username) {
         try {
             given()
                     .spec(requestSpecification)
@@ -45,7 +45,7 @@ public class UserFunctionality extends Endpoints {
     }
 
     @Step("Отправка запроса на авторизацию пользователя с логином = {username}")
-    public UserFunctionality login(String username, String password) {
+    public UserApi login(String username, String password) {
         try {
             given()
                     .spec(requestSpecification)
@@ -62,7 +62,7 @@ public class UserFunctionality extends Endpoints {
     }
 
     @Step("Отправка запроса на выход пользователя из системы")
-    public UserFunctionality logout() {
+    public UserApi logout() {
         try {
             given()
                     .spec(requestSpecification)
@@ -77,7 +77,7 @@ public class UserFunctionality extends Endpoints {
     }
 
     @Step("Отправка запроса на удаление пользователя по логину = {username}")
-    public UserFunctionality deleteUserByUsername(String username) {
+    public UserApi deleteUserByUsername(String username) {
         try {
             given()
                     .spec(requestSpecification)
@@ -94,7 +94,7 @@ public class UserFunctionality extends Endpoints {
     }
 
     @Step("Отправка запроса на добавление списка пользователей")
-    public UserFunctionality createUserList(String userListJson) {
+    public UserApi createUserList(String userListJson) {
         try {
             given()
                     .spec(requestSpecification)
@@ -111,7 +111,7 @@ public class UserFunctionality extends Endpoints {
     }
 
     @Step("Отправка запроса на добавление нового пользователя")
-    public UserFunctionality createUser(String username, String userJson) {
+    public UserApi createUser(String username, String userJson) {
         if (!checkIfUserExistByUsername(username)) {
             try {
                 given()
@@ -132,7 +132,7 @@ public class UserFunctionality extends Endpoints {
     }
 
     @Step("Отправка запроса на изменение данных пользователя с логином {username}")
-    public UserFunctionality updateUser(String username, String userJson) {
+    public UserApi updateUser(String username, String userJson) {
         try {
             given()
                     .spec(requestSpecification)
@@ -152,7 +152,7 @@ public class UserFunctionality extends Endpoints {
     }
 
     @Step("Проверка отсутствия данных о пользователе с логином = {username} по запросу")
-    public UserFunctionality checkNoDataAboutUser(String username) {
+    public UserApi checkNoDataAboutUser(String username) {
         try {
             given()
                     .spec(requestSpecification)

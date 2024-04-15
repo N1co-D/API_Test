@@ -1,4 +1,4 @@
-package petstore.functionality;
+package petstore.api;
 
 import io.qameta.allure.Step;
 import io.restassured.response.Response;
@@ -9,7 +9,7 @@ import petstore.specs.Specification;
 import static io.restassured.RestAssured.given;
 import static io.restassured.http.ContentType.JSON;
 
-public class StoreFunctionality extends Endpoints {
+public class StoreApi extends Endpoints {
     private static final RequestSpecification requestSpecification = Specification.requestSpecification();
     private static final ResponseSpecification responseSpecification = Specification.responseSpecification();
 
@@ -28,7 +28,7 @@ public class StoreFunctionality extends Endpoints {
     }
 
     @Step("Отправка запроса на получение данных о количестве питомцев в инвентаре по статусам")
-    public StoreFunctionality getInventoryWithStatusFilter() {
+    public StoreApi getInventoryWithStatusFilter() {
         try {
             given()
                     .spec(requestSpecification)
@@ -43,7 +43,7 @@ public class StoreFunctionality extends Endpoints {
     }
 
     @Step("Отправка запроса на получение заказа по id = {orderId}")
-    public StoreFunctionality findOrderById(int orderId) {
+    public StoreApi findOrderById(int orderId) {
         try {
             given()
                     .spec(requestSpecification)
@@ -60,7 +60,7 @@ public class StoreFunctionality extends Endpoints {
     }
 
     @Step("Отправка запроса на удаление заказа по id = {orderId}")
-    public StoreFunctionality deleteOrderById(int orderId) {
+    public StoreApi deleteOrderById(int orderId) {
         try {
             given()
                     .spec(requestSpecification)
@@ -77,7 +77,7 @@ public class StoreFunctionality extends Endpoints {
     }
 
     @Step("Отправка запроса на добавление нового заказа")
-    public StoreFunctionality placeNewOrder(int id, String petJson) {
+    public StoreApi placeNewOrder(int id, String petJson) {
         if (!checkIfOrderExistById(id)) {
             try {
                 given()
@@ -98,7 +98,7 @@ public class StoreFunctionality extends Endpoints {
     }
 
     @Step("Проверка отсутствия данных о заказе с id = {orderId} по запросу")
-    public StoreFunctionality checkNoDataAboutOrder(int orderId) {
+    public StoreApi checkNoDataAboutOrder(int orderId) {
         try {
             given()
                     .spec(requestSpecification)

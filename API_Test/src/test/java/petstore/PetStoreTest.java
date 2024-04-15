@@ -4,14 +4,14 @@ import io.qameta.allure.Description;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
-import petstore.functionality.PetFunctionality;
-import petstore.functionality.StoreFunctionality;
-import petstore.functionality.UserFunctionality;
+import petstore.api.PetApi;
+import petstore.api.StoreApi;
+import petstore.api.UserApi;
 
 public class PetStoreTest extends PetStoreTestConfig {
-    private final PetFunctionality petFunctionality = new PetFunctionality();
-    private final StoreFunctionality storeFunctionality = new StoreFunctionality();
-    private final UserFunctionality userFunctionality = new UserFunctionality();
+    private final PetApi petFunctionality = new PetApi();
+    private final StoreApi storeFunctionality = new StoreApi();
+    private final UserApi userFunctionality = new UserApi();
 
     @Description("TC-ID1 Отправка запроса на добавление нового питомца")
     @ParameterizedTest

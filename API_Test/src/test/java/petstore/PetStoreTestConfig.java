@@ -5,7 +5,7 @@ import io.restassured.RestAssured;
 import io.restassured.specification.RequestSpecification;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
-import petstore.functionality.Endpoints;
+import petstore.api.Endpoints;
 import petstore.specs.Specification;
 
 import static io.restassured.RestAssured.given;

@@ -1,4 +1,4 @@
-package petstore.functionality;
+package petstore.api;
 
 public class Endpoints {
     public static final String PET_ID = "/pet/{petId}";
