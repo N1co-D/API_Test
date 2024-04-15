@@ -12,7 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Pet {
-    private int id;
+    private Integer id;
     private Category category;
     private String name;
     private List<String> photoUrls;

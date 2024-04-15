@@ -10,12 +10,12 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class User {
-    private int id;
+    private Integer id;
     private String username;
     private String firstName;
     private String lastName;
     private String email;
     private String password;
     private String phone;
-    private int userStatus;
+    private Integer userStatus;
 }
