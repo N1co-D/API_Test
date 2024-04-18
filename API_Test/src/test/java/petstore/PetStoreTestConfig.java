@@ -4,9 +4,9 @@ import io.qameta.allure.restassured.AllureRestAssured;
 import io.restassured.RestAssured;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
-import petstore.service.PetService;
-import petstore.service.StoreService;
-import petstore.service.UserService;
+import petstore.services.PetService;
+import petstore.services.StoreService;
+import petstore.services.UserService;
 
 @Slf4j
 public class PetStoreTestConfig extends PetStoreTestData {

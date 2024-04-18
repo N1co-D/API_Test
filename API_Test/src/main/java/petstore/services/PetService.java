@@ -1,4 +1,4 @@
-package petstore.service;
+package petstore.services;
 
 import io.qameta.allure.Step;
 import io.restassured.response.Response;

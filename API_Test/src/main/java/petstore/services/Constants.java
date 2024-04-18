@@ -1,4 +1,4 @@
-package petstore.service;
+package petstore.services;
 
 public class Constants {
     public static final String PET_BY_ID = "/pet/{petId}";
