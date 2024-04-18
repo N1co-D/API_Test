@@ -14,197 +14,158 @@ import java.util.List;
 import java.util.stream.Stream;
 
 public class PetStoreTestData {
-    static int petId;
-    static int orderId;
-    static String username;
+    public final static long PET_ID = 314314L;
+    public final static long ORDER_ID = 17031703L;
+    public final static String USERNAME = "QAtester4090";
+    public final static String UPDATED_USERNAME = "QAtester1703";
+    public final static List<String> PHOTO_URLS = new ArrayList<>(List.of("url1", "url2", "url3"));
+    public final static List<Tag> TAGS = List.of(new Tag(0L, "black"), new Tag(1L, "small"));
+    public final static Category CATEGORY = new Category(0L, "dog");
 
     /**
      * TC-ID1
      */
     static Stream<Arguments> checkAddNewPetTestData() throws JsonProcessingException {
-        petId = 314314;
-        String petJson = petData(petId);
-        String expectedName = "doggie";
-        String expectedStatus = "available";
-        return Stream.of(Arguments.of(petJson, expectedName, expectedStatus));
+        return Stream.of(Arguments.of(petData(), PET_ID, CATEGORY, "doggie",
+                PHOTO_URLS, TAGS, "available"));
     }
 
     /**
      * TC-ID2
      */
     static Stream<Arguments> checkFindPetByIdTestData() throws JsonProcessingException {
-        petId = 314314;
-        String petJson = petData(petId);
-        return Stream.of(Arguments.of(petJson));
+        return Stream.of(Arguments.of(petData()));
     }
 
     /**
      * TC-ID3
      */
     static Stream<Arguments> checkPartialUpdatePetTestData() throws JsonProcessingException {
-        petId = 314314;
-        String petJson = petData(petId);
-        String updatedName = "Kesha";
-        String updatedStatus = "sold";
-        return Stream.of(Arguments.of(petJson, updatedName, updatedStatus));
+        return Stream.of(Arguments.of(petData(), "Kesha", "sold"));
     }
 
     /**
      * TC-ID4
      */
     static Stream<Arguments> checkFullUpdatePetTestData() throws JsonProcessingException {
-        petId = 314314;
-        String petJson = petData(petId);
-        String updatePetJson = updatePetData(petId);
-        String expectedName = "boris";
-        String expectedStatus = "sold";
-        return Stream.of(Arguments.of(petJson, updatePetJson, expectedName, expectedStatus));
+        return Stream.of(Arguments.of(petData(), updatePetData(), PET_ID, CATEGORY,
+                "boris", PHOTO_URLS, TAGS, "sold"));
     }
 
     /**
      * TC-ID5
      */
     static Stream<Arguments> checkDeletePetByIdTestData() throws JsonProcessingException {
-        petId = 314314;
-        String petJson = petData(petId);
-        return Stream.of(Arguments.of(petJson));
+        return Stream.of(Arguments.of(petData()));
     }
 
     /**
      * TC-ID8
      */
     static Stream<Arguments> checkAddNewOrderTestData() throws JsonProcessingException {
-        orderId = 17031703;
-        String orderJson = orderData(orderId);
-        int expectedPetId = 0;
-        String expectedStatus = "placed";
-        return Stream.of(Arguments.of(orderJson, expectedPetId, expectedStatus));
+        return Stream.of(Arguments.of(orderData(), ORDER_ID, 0L, 0, "2024-04-13T16:20:28.459+0000",
+                "placed", true));
     }
 
     /**
      * TC-ID9
      */
     static Stream<Arguments> checkFindOrderByIdTestData() throws JsonProcessingException {
-        orderId = 17031703;
-        String orderJson = orderData(orderId);
-        return Stream.of(Arguments.of(orderJson));
+        return Stream.of(Arguments.of(orderData()));
     }
 
     /**
      * TC-ID10
      */
     static Stream<Arguments> checkDeleteOrderByIdTestData() throws JsonProcessingException {
-        orderId = 18121812;
-        String orderJson = orderData(orderId);
-        return Stream.of(Arguments.of(orderJson));
+        return Stream.of(Arguments.of(orderData()));
     }
 
     /**
      * TC-ID11
      */
     static Stream<Arguments> checkCreateUserTestData() throws JsonProcessingException {
-        username = "MarkevichD";
-        String userJson = userData(username);
-        String expectedFirstName = "Vladimir";
-        String expectedEmail = "java@mail.ru";
-        return Stream.of(Arguments.of(userJson, expectedFirstName, expectedEmail));
+        return Stream.of(Arguments.of(userData(), USERNAME, "Vladimir", "Ivanov", "java@mail.ru",
+                "password", "string", 0));
     }
 
     /**
      * TC-ID12
      */
     static Stream<Arguments> checkCreateUserListTestData() throws JsonProcessingException {
-        String userListJson = userListData();
-        return Stream.of(Arguments.of(userListJson));
+        return Stream.of(Arguments.of(userListData()));
     }
 
     /**
      * TC-ID13
      */
     static Stream<Arguments> checkGetUserByUsernameTestData() throws JsonProcessingException {
-        username = "MarkevichD";
-        String userJson = userData(username);
-        return Stream.of(Arguments.of(userJson));
+        return Stream.of(Arguments.of(userData()));
     }
 
     /**
      * TC-ID14
      */
     static Stream<Arguments> checkLoginTestData() throws JsonProcessingException {
-        username = "MarkevichD";
-        String userJson = userData(username);
-        String password = "password";
-        return Stream.of(Arguments.of(userJson, password));
+        return Stream.of(Arguments.of(userData(), "password"));
     }
 
     /**
      * TC-ID15
      */
     static Stream<Arguments> checkUpdateUserTestData() throws JsonProcessingException {
-        username = "MarkevichD";
-        String userJson = userData(username);
-        String password = "password";
-        String updateUsername = "DaniilM";
-        String updateUserJson = updateUserData(updateUsername);
-        String expectedFirstName = "Daniil";
-        String expectedEmail = "qa@test.com";
-        return Stream.of(Arguments.of(userJson, password, updateUsername, updateUserJson, expectedFirstName, expectedEmail));
+        return Stream.of(Arguments.of(userData(), "password", updateUserData(), "QAtester1703",
+                "Daniil", "Markevich", "qa@test.com", "password", "string", 0));
     }
 
     /**
      * TC-ID16
      */
     static Stream<Arguments> checkLogoutTestData() throws JsonProcessingException {
-        username = "MarkevichD";
-        String userJson = userData(username);
-        String password = "password";
-        return Stream.of(Arguments.of(userJson, password));
+        return Stream.of(Arguments.of(userData(), "password"));
     }
 
     /**
      * TC-ID17
      */
     static Stream<Arguments> checkDeleteUserByUsernameTestData() throws JsonProcessingException {
-        username = "QATester4090";
-        String userJson = userData(username);
-        return Stream.of(Arguments.of(username, userJson));
+        return Stream.of(Arguments.of(userData()));
     }
 
-    private static String petData(int petId) throws JsonProcessingException {
-        List<String> photoUrls = new ArrayList<>(List.of("string"));
-        List<Tag> tags = List.of(new Tag(0, "string"));
-        Category category = new Category(0, "string");
-        Pet pet = new Pet(petId, category, "doggie", photoUrls, tags, "available");
+    private static String petData() throws JsonProcessingException {
+        Pet pet = new Pet(PET_ID, CATEGORY, "doggie", PHOTO_URLS, TAGS, "available");
         return turnObjectIntoJson(pet);
     }
 
-    private static String updatePetData(int petId) throws JsonProcessingException {
-        List<String> photoUrls = new ArrayList<>(List.of("string"));
-        List<Tag> tags = List.of(new Tag(0, "string"));
-        Category category = new Category(0, "string");
-        Pet pet = new Pet(petId, category, "boris", photoUrls, tags, "sold");
+    private static String updatePetData() throws JsonProcessingException {
+        Pet pet = new Pet(PET_ID, CATEGORY, "boris", PHOTO_URLS, TAGS, "sold");
         return turnObjectIntoJson(pet);
     }
 
-    private static String orderData(int orderId) throws JsonProcessingException {
-        Order order = new Order(orderId, 0, 0, "2024-04-13T16:20:28.459Z", "placed", true);
+    private static String orderData() throws JsonProcessingException {
+        Order order = new Order(ORDER_ID, 0L, 0, "2024-04-13T16:20:28.459Z",
+                "placed", true);
         return turnObjectIntoJson(order);
     }
 
-    private static String userData(String username) throws JsonProcessingException {
-        User user = new User(0L, username, "Vladimir", "Ivanov", "java@mail.ru", "password", "string", 0);
+    private static String userData() throws JsonProcessingException {
+        User user = new User(0L, USERNAME, "Vladimir", "Ivanov", "java@mail.ru",
+                "password", "string", 0);
         return turnObjectIntoJson(user);
     }
 
-    private static String updateUserData(String username) throws JsonProcessingException {
-        User user = new User(0L, username, "Daniil", "Markevich", "qa@test.com", "password", "string", 0);
+    private static String updateUserData() throws JsonProcessingException {
+        User user = new User(0L, UPDATED_USERNAME, "Daniil", "Markevich", "qa@test.com",
+                "password", "string", 0);
         return turnObjectIntoJson(user);
     }
 
     private static String userListData() throws JsonProcessingException {
         List<User> users = new ArrayList<>();
-        users.add(new User(101101L, "Alex", "Alex", "Petrov", "email", "password", "string", 0));
-        users.add(new User(202202L, "Max", "Max", "Ivanov", "email", "password", "string", 0));
+        users.add(new User(101101L, "Alexx", "Alex", "Petrov", "email",
+                "password", "string", 0));
+        users.add(new User(202202L, "Maxx", "Max", "Ivanov", "email",
+                "password", "string", 0));
         return turnObjectIntoJson(users);
     }
 

@@ -1,19 +1,17 @@
 package petstore.data.order;
 
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class Order {
-    private Integer id;
-    private Integer petId;
+    private long id;
+    private long petId;
     private Integer quantity;
     private String shipDate;
     private String status;
-    private Boolean complete;
+    private boolean complete;
 }
