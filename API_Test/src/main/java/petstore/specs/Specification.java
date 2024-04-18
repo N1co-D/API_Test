@@ -12,7 +12,6 @@ public class Specification {
 
     public static RequestSpecification requestSpecification() {
         return new RequestSpecBuilder()
-//                .setBaseUri(new ConfProperties().getProperty("base-url"))
                 .setBaseUri(BASE_URL)
                 .log(LogDetail.METHOD)
                 .log(LogDetail.BODY)
