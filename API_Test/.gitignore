@@ -9,3 +9,5 @@ misc.xml
 jarRepositories.xml
 compiler.xml
 /uiDesigner.xml
+
+/.allure/
