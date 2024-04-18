@@ -10,9 +10,9 @@ import petstore.services.UserService;
 
 @Slf4j
 public class PetStoreTestConfig extends PetStoreTestData {
-    protected final PetService petService = new PetService();
-    protected final StoreService storeService = new StoreService();
-    protected final UserService userService = new UserService();
+    public final PetService petService = new PetService();
+    public final StoreService storeService = new StoreService();
+    public final UserService userService = new UserService();
 
     @BeforeEach
     public void setFilter() {
