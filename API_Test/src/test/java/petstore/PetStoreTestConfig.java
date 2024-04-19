@@ -21,28 +21,34 @@ public class PetStoreTestConfig extends PetStoreTestData {
 
     public void clearPetDataAfterTest(long petId) {
         log.info(String.format("Проверка наличия питомца с id = %s в базе", petId));
+
         if (!petService.checkNoDataAboutPet(petId)) {
             log.info(String.format("Питомец с id = %s есть в базе", petId));
             petService.deletePetById(petId);
         }
+
         log.info(String.format("Питомец с id = %s отсутствует в базе", petId));
     }
 
     public void clearOrderDataAfterTest(long orderId) {
         log.info(String.format("Проверка наличия заказа с id = %s в базе", orderId));
+
         if (!storeService.checkNoDataAboutOrder(orderId)) {
             log.info(String.format("Заказ с id = %s есть в базе", orderId));
             storeService.deleteOrderById(orderId);
         }
+
         log.info(String.format("Заказ с id = %s отсутствует в базе", orderId));
     }
 
     public void clearUserDataAfterTest(String username) {
         log.info(String.format("Проверка наличия пользователя с логином = %s в базе", username));
+
         if (!userService.checkNoDataAboutUser(username)) {
             log.info(String.format("Пользователь с логином = %s есть в базе", username));
             userService.deleteUserByUsername(username);
         }
+
         log.info(String.format("Пользователь с логином = %s отсутствует в базе", username));
     }
 }
