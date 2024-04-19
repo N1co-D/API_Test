@@ -25,7 +25,7 @@ public class PetStoreTestData {
     /**
      * TC-ID1
      */
-    static Stream<Arguments> checkAddNewPetTestData() throws JsonProcessingException {
+    public static Stream<Arguments> checkAddNewPetTestData() throws JsonProcessingException {
         return Stream.of(Arguments.of(petData(), PET_ID, CATEGORY, "doggie",
                 PHOTO_URLS, TAGS, "available"));
     }
@@ -33,21 +33,21 @@ public class PetStoreTestData {
     /**
      * TC-ID2
      */
-    static Stream<Arguments> checkFindPetByIdTestData() throws JsonProcessingException {
+    public static Stream<Arguments> checkFindPetByIdTestData() throws JsonProcessingException {
         return Stream.of(Arguments.of(petData()));
     }
 
     /**
      * TC-ID3
      */
-    static Stream<Arguments> checkPartialUpdatePetTestData() throws JsonProcessingException {
+    public static Stream<Arguments> checkPartialUpdatePetTestData() throws JsonProcessingException {
         return Stream.of(Arguments.of(petData(), "Kesha", "sold"));
     }
 
     /**
      * TC-ID4
      */
-    static Stream<Arguments> checkFullUpdatePetTestData() throws JsonProcessingException {
+    public static Stream<Arguments> checkFullUpdatePetTestData() throws JsonProcessingException {
         return Stream.of(Arguments.of(petData(), updatePetData(), PET_ID, CATEGORY,
                 "boris", PHOTO_URLS, TAGS, "sold"));
     }
@@ -55,14 +55,14 @@ public class PetStoreTestData {
     /**
      * TC-ID5
      */
-    static Stream<Arguments> checkDeletePetByIdTestData() throws JsonProcessingException {
+    public static Stream<Arguments> checkDeletePetByIdTestData() throws JsonProcessingException {
         return Stream.of(Arguments.of(petData()));
     }
 
     /**
      * TC-ID8
      */
-    static Stream<Arguments> checkAddNewOrderTestData() throws JsonProcessingException {
+    public static Stream<Arguments> checkAddNewOrderTestData() throws JsonProcessingException {
         return Stream.of(Arguments.of(orderData(), ORDER_ID, 0L, 0, "2024-04-13T16:20:28.459+0000",
                 "placed", true));
     }
@@ -70,21 +70,21 @@ public class PetStoreTestData {
     /**
      * TC-ID9
      */
-    static Stream<Arguments> checkFindOrderByIdTestData() throws JsonProcessingException {
+    public static Stream<Arguments> checkFindOrderByIdTestData() throws JsonProcessingException {
         return Stream.of(Arguments.of(orderData()));
     }
 
     /**
      * TC-ID10
      */
-    static Stream<Arguments> checkDeleteOrderByIdTestData() throws JsonProcessingException {
+    public static Stream<Arguments> checkDeleteOrderByIdTestData() throws JsonProcessingException {
         return Stream.of(Arguments.of(orderData()));
     }
 
     /**
      * TC-ID11
      */
-    static Stream<Arguments> checkCreateUserTestData() throws JsonProcessingException {
+    public static Stream<Arguments> checkCreateUserTestData() throws JsonProcessingException {
         return Stream.of(Arguments.of(userData(), USERNAME, "Vladimir", "Ivanov", "java@mail.ru",
                 "password", "string", 0));
     }
@@ -92,28 +92,28 @@ public class PetStoreTestData {
     /**
      * TC-ID12
      */
-    static Stream<Arguments> checkCreateUserListTestData() throws JsonProcessingException {
+    public static Stream<Arguments> checkCreateUserListTestData() throws JsonProcessingException {
         return Stream.of(Arguments.of(userListData()));
     }
 
     /**
      * TC-ID13
      */
-    static Stream<Arguments> checkGetUserByUsernameTestData() throws JsonProcessingException {
+    public static Stream<Arguments> checkGetUserByUsernameTestData() throws JsonProcessingException {
         return Stream.of(Arguments.of(userData()));
     }
 
     /**
      * TC-ID14
      */
-    static Stream<Arguments> checkLoginTestData() throws JsonProcessingException {
+    public static Stream<Arguments> checkLoginTestData() throws JsonProcessingException {
         return Stream.of(Arguments.of(userData(), "password"));
     }
 
     /**
      * TC-ID15
      */
-    static Stream<Arguments> checkUpdateUserTestData() throws JsonProcessingException {
+    public static Stream<Arguments> checkUpdateUserTestData() throws JsonProcessingException {
         return Stream.of(Arguments.of(userData(), "password", updateUserData(), "QAtester1703",
                 "Daniil", "Markevich", "qa@test.com", "password", "string", 0));
     }
@@ -121,14 +121,14 @@ public class PetStoreTestData {
     /**
      * TC-ID16
      */
-    static Stream<Arguments> checkLogoutTestData() throws JsonProcessingException {
+    public static Stream<Arguments> checkLogoutTestData() throws JsonProcessingException {
         return Stream.of(Arguments.of(userData(), "password"));
     }
 
     /**
      * TC-ID17
      */
-    static Stream<Arguments> checkDeleteUserByUsernameTestData() throws JsonProcessingException {
+    public static Stream<Arguments> checkDeleteUserByUsernameTestData() throws JsonProcessingException {
         return Stream.of(Arguments.of(userData()));
     }
 
