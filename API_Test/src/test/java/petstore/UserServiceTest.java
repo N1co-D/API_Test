@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class UserServiceTest extends PetStoreTestConfig {
 
-    @DisplayName("TC-ID11 Отправка запроса на добавление нового пользователя")
+    @DisplayName("TC-ID11")
     @Description("TC-ID11 Отправка запроса на добавление нового пользователя")
     @ParameterizedTest
     @MethodSource("petstore.PetStoreTestData#checkCreateUserTestData")
@@ -23,7 +23,7 @@ public class UserServiceTest extends PetStoreTestConfig {
         clearUserDataAfterTest(USERNAME);
     }
 
-    @DisplayName("TC-ID12 Отправка запроса на добавление списка пользователей")
+    @DisplayName("TC-ID12")
     @Description("TC-ID12 Отправка запроса на добавление списка пользователей")
     @ParameterizedTest
     @MethodSource("petstore.PetStoreTestData#checkCreateUserListTestData")
@@ -32,7 +32,7 @@ public class UserServiceTest extends PetStoreTestConfig {
                 .createUserList(userListJson);
     }
 
-    @DisplayName("TC-ID13 Отправка запроса на получение пользователя по логину")
+    @DisplayName("TC-ID13")
     @Description("TC-ID13 Отправка запроса на получение пользователя по логину")
     @ParameterizedTest
     @MethodSource("petstore.PetStoreTestData#checkGetUserByUsernameTestData")
@@ -43,7 +43,7 @@ public class UserServiceTest extends PetStoreTestConfig {
         clearUserDataAfterTest(USERNAME);
     }
 
-    @DisplayName("TC-ID14 Отправка запроса на авторизацию пользователя")
+    @DisplayName("TC-ID14")
     @Description("TC-ID14 Отправка запроса на авторизацию пользователя")
     @ParameterizedTest
     @MethodSource("petstore.PetStoreTestData#checkLoginTestData")
@@ -54,7 +54,7 @@ public class UserServiceTest extends PetStoreTestConfig {
         clearUserDataAfterTest(USERNAME);
     }
 
-    @DisplayName("TC-ID15 Отправка запроса на изменение данных пользователя")
+    @DisplayName("TC-ID15")
     @Description("TC-ID15 Отправка запроса на изменение данных пользователя")
     @ParameterizedTest
     @MethodSource("petstore.PetStoreTestData#checkUpdateUserTestData")
@@ -71,7 +71,7 @@ public class UserServiceTest extends PetStoreTestConfig {
         clearUserDataAfterTest(USERNAME);
     }
 
-    @DisplayName("TC-ID16 Отправка запроса на выход пользователя из системы")
+    @DisplayName("TC-ID16")
     @Description("TC-ID16 Отправка запроса на выход пользователя из системы")
     @ParameterizedTest
     @MethodSource("petstore.PetStoreTestData#checkLogoutTestData")
@@ -83,7 +83,7 @@ public class UserServiceTest extends PetStoreTestConfig {
         clearUserDataAfterTest(USERNAME);
     }
 
-    @DisplayName("TC-ID17 Отправка запроса на удаление пользователя по логину")
+    @DisplayName("TC-ID17")
     @Description("TC-ID17 Отправка запроса на удаление пользователя по логину")
     @ParameterizedTest
     @MethodSource("petstore.PetStoreTestData#checkDeleteUserByUsernameTestData")

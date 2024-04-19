@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class StoreServiceTest extends PetStoreTestConfig {
 
-    @DisplayName("TC-ID8 Отправка запроса на добавление нового заказа")
+    @DisplayName("TC-ID8")
     @Description("TC-ID8 Отправка запроса на добавление нового заказа")
     @ParameterizedTest
     @MethodSource("petstore.PetStoreTestData#checkAddNewOrderTestData")
@@ -23,7 +23,7 @@ public class StoreServiceTest extends PetStoreTestConfig {
         clearOrderDataAfterTest(ORDER_ID);
     }
 
-    @DisplayName("TC-ID9 Отправка запроса на получение заказа по id")
+    @DisplayName("TC-ID9")
     @Description("TC-ID9 Отправка запроса на получение заказа по id")
     @ParameterizedTest
     @MethodSource("petstore.PetStoreTestData#checkFindOrderByIdTestData")
@@ -34,7 +34,7 @@ public class StoreServiceTest extends PetStoreTestConfig {
         clearOrderDataAfterTest(ORDER_ID);
     }
 
-    @DisplayName("TC-ID10 Отправка запроса на удаление заказа по id")
+    @DisplayName("TC-ID10")
     @Description("TC-ID10 Отправка запроса на удаление заказа по id")
     @ParameterizedTest
     @MethodSource("petstore.PetStoreTestData#checkDeleteOrderByIdTestData")

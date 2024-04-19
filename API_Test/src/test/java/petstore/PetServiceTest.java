@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class PetServiceTest extends PetStoreTestConfig {
 
-    @DisplayName("TC-ID1 Отправка запроса на добавление нового питомца")
+    @DisplayName("TC-ID1")
     @Description("TC-ID1 Отправка запроса на добавление нового питомца")
     @ParameterizedTest
     @MethodSource("petstore.PetStoreTestData#checkAddNewPetTestData")
@@ -28,7 +28,7 @@ public class PetServiceTest extends PetStoreTestConfig {
         clearPetDataAfterTest(PET_ID);
     }
 
-    @DisplayName("TC-ID2 Отправка запроса на получение питомца по id")
+    @DisplayName("TC-ID2")
     @Description("TC-ID2 Отправка запроса на получение питомца по id")
     @ParameterizedTest
     @MethodSource("petstore.PetStoreTestData#checkFindPetByIdTestData")
@@ -39,7 +39,7 @@ public class PetServiceTest extends PetStoreTestConfig {
         clearPetDataAfterTest(PET_ID);
     }
 
-    @DisplayName("TC-ID3 Отправка запроса на изменение имени и статуса питомца")
+    @DisplayName("TC-ID3")
     @Description("TC-ID3 Отправка запроса на изменение имени и статуса питомца")
     @ParameterizedTest
     @MethodSource("petstore.PetStoreTestData#checkPartialUpdatePetTestData")
@@ -51,7 +51,7 @@ public class PetServiceTest extends PetStoreTestConfig {
         clearPetDataAfterTest(PET_ID);
     }
 
-    @DisplayName("TC-ID4 Отправка запроса на изменение данных о питомце")
+    @DisplayName("TC-ID4")
     @Description("TC-ID4 Отправка запроса на изменение данных о питомце")
     @ParameterizedTest
     @MethodSource("petstore.PetStoreTestData#checkFullUpdatePetTestData")
@@ -66,7 +66,7 @@ public class PetServiceTest extends PetStoreTestConfig {
         clearPetDataAfterTest(PET_ID);
     }
 
-    @DisplayName("TC-ID5 Отправка запроса на удаление питомца по id")
+    @DisplayName("TC-ID5")
     @Description("TC-ID5 Отправка запроса на удаление питомца по id")
     @ParameterizedTest
     @MethodSource("petstore.PetStoreTestData#checkDeletePetByIdTestData")
@@ -78,7 +78,7 @@ public class PetServiceTest extends PetStoreTestConfig {
                 "Питомец с заданным id = " + PET_ID + " не был удален");
     }
 
-    @DisplayName("TC-ID6 Отправка запроса на получение всех питомцев по статусу")
+    @DisplayName("TC-ID6")
     @Description("TC-ID6 Отправка запроса на получение всех питомцев по статусу")
     @ParameterizedTest
     @ValueSource(strings = {"available", "pending", "sold"})
@@ -86,7 +86,7 @@ public class PetServiceTest extends PetStoreTestConfig {
         petService.findPetByStatus(status);
     }
 
-    @DisplayName("TC-ID7 Отправка запроса на получение данных о количестве питомцев в инвентаре по статусам")
+    @DisplayName("TC-ID7")
     @Description("TC-ID7 Отправка запроса на получение данных о количестве питомцев в инвентаре по статусам")
     @Test
     public void checkGetInventoryByStatus() {
