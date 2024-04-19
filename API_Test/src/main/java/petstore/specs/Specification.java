@@ -8,7 +8,7 @@ import io.restassured.specification.ResponseSpecification;
 import petstore.utilites.ConfProperties;
 
 public class Specification {
-    private static final String BASE_URL = new ConfProperties().getProperty("base-url");
+    private static final String BASE_URL = ConfProperties.getProperty("base-url");
 
     public static RequestSpecification requestSpecification() {
         return new RequestSpecBuilder()
