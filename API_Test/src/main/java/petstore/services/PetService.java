@@ -143,7 +143,8 @@ public class PetService {
         return this;
     }
 
-    @Step("Проверка соответствия полей name и status с ожидаемыми результатами = {expectedName} и {expectedStatus} соответственно")
+    @Step("Проверка соответствия полей name и status с ожидаемыми результатами = {expectedName} и " +
+            "{expectedStatus} соответственно")
     public PetService checkPetsNameAndStatus(long petId, String expectedName, String expectedStatus) {
         log.info("Проверка измененных имени и статуса питомца");
 
