@@ -24,21 +24,25 @@ public class PetService {
 
     private boolean checkIfPetExistById(long petId) {
         log.info(String.format("Проверка наличия данных о питомце с id = %s", petId));
+
         Response response = given()
                 .spec(REQUEST_SPECIFICATION)
                 .pathParam("petId", petId)
                 .when()
                 .get(Constants.PET_BY_ID);
+
         response
                 .then()
                 .log()
                 .status();
+
         return response.getStatusCode() == 200;
     }
 
     @Step("Отправка запроса на получение питомца по id = {id}")
     public PetService findPetById(long petId) {
         log.info(String.format("Отправка запроса на получение данных о питомце по id = %s", petId));
+
         given()
                 .spec(REQUEST_SPECIFICATION)
                 .pathParam("petId", petId)
@@ -46,6 +50,7 @@ public class PetService {
                 .get(Constants.PET_BY_ID)
                 .then()
                 .spec(RESPONSE_SPECIFICATION);
+
         log.info(String.format("Получение данных о питомце по id = %s прошло успешно", petId));
         return this;
     }
@@ -53,6 +58,7 @@ public class PetService {
     @Step("Отправка запроса на удаление питомца по id = {petId}")
     public PetService deletePetById(long petId) {
         log.info(String.format("Отправка запроса на удаление данных о питомце по id = %s", petId));
+
         given()
                 .spec(REQUEST_SPECIFICATION)
                 .pathParam("petId", petId)
@@ -60,6 +66,7 @@ public class PetService {
                 .delete(Constants.PET_BY_ID)
                 .then()
                 .spec(RESPONSE_SPECIFICATION);
+
         log.info(String.format("Удаление данных о питомце по id = %s прошло успешно", petId));
         return this;
     }
@@ -67,6 +74,7 @@ public class PetService {
     @Step("Отправка запроса на получение всех питомцев по статусу = {status}")
     public PetService findPetByStatus(String status) {
         log.info(String.format("Отправка запроса на поиск питомца по статусу = %s", status));
+
         given()
                 .spec(REQUEST_SPECIFICATION)
                 .param("status", status)
@@ -74,6 +82,7 @@ public class PetService {
                 .get(Constants.PET_STATUS)
                 .then()
                 .spec(RESPONSE_SPECIFICATION);
+
         log.info(String.format("Получение данных о питомце по статусу = %s прошло успешно", status));
         return this;
     }
@@ -81,6 +90,7 @@ public class PetService {
     @Step("Отправка запроса на добавление нового питомца")
     public PetService addNewPet(long id, String petJson) {
         log.info("Отправка запроса на добавление нового питомца");
+
         if (!checkIfPetExistById(id)) {
             log.info(String.format("В текущий момент питомец с id = %s в базе отсутствует", id));
             given()
@@ -92,6 +102,7 @@ public class PetService {
                     .then()
                     .spec(RESPONSE_SPECIFICATION);
         }
+
         log.info("Добавление питомца прошло успешно");
         return this;
     }
@@ -100,6 +111,7 @@ public class PetService {
     public PetService partialUpdatePet(long petId, String name, String status) {
         log.info(String.format("Отправка запроса на изменение имени на %s и статуса питомца на %s через id = %s",
                 name, status, petId));
+
         given()
                 .spec(REQUEST_SPECIFICATION)
                 .pathParam("petId", petId)
@@ -109,6 +121,7 @@ public class PetService {
                 .post(Constants.PET_BY_ID)
                 .then()
                 .spec(RESPONSE_SPECIFICATION);
+
         log.info("Изменение данных питомца прошла успешно");
         return this;
     }
@@ -116,6 +129,7 @@ public class PetService {
     @Step("Отправка запроса на полное изменение данных о питомце")
     public PetService fullUpdatePet(String petJson) {
         log.info("Отправка запроса на полное изменение данных о питомце");
+
         given()
                 .spec(REQUEST_SPECIFICATION)
                 .contentType(JSON)
@@ -124,6 +138,7 @@ public class PetService {
                 .put(Constants.NEW_PET)
                 .then()
                 .spec(RESPONSE_SPECIFICATION);
+
         log.info("Изменение данных питомца прошла успешно");
         return this;
     }
@@ -131,6 +146,7 @@ public class PetService {
     @Step("Проверка соответствия полей name и status с ожидаемыми результатами = {expectedName} и {expectedStatus} соответственно")
     public PetService checkPetsNameAndStatus(long petId, String expectedName, String expectedStatus) {
         log.info("Проверка измененных имени и статуса питомца");
+
         Pet response = given()
                 .spec(REQUEST_SPECIFICATION)
                 .pathParam("petId", petId)
@@ -139,19 +155,27 @@ public class PetService {
                 .then()
                 .spec(RESPONSE_SPECIFICATION)
                 .extract().body().as(Pet.class);
+
+        log.info("Проверка соответствия фактических измененных полей name и status с ожидаемыми результатами = " +
+                expectedName + " и " + expectedStatus + " соответственно");
+
         Assertions.assertAll(
                 () -> assertEquals(expectedName, response.getName(),
-                        "Фактическое имя питомца = " + response.getName() + " не соответствует ожидаемому = " + expectedName),
+                        "Фактическое имя питомца = " + response.getName() +
+                                " не соответствует ожидаемому = " + expectedName),
                 () -> assertEquals(expectedStatus, response.getStatus(),
-                        "Фактический статус питомца = " + response.getStatus() + " не соответствует ожидаемому = " + expectedStatus));
+                        "Фактический статус питомца = " + response.getStatus() +
+                                " не соответствует ожидаемому = " + expectedStatus));
+
         log.info("Проверка измененных имени и статуса питомца прошла успешно");
         return this;
     }
 
-    @Step("Проверка соответствия полей name и status с ожидаемыми результатами = {expectedName} и {expectedStatus} соответственно")
+    @Step("Проверка соответствия полей с ожидаемыми результатами")
     public PetService checkPetParameters(long petId, long expectedId, Category expectedCategory, String expectedName,
                                          List<String> expectedPhotoUrls, List<Tag> expectedTags, String expectedStatus) {
-        log.info("Проверка соответствия фактических измененных данных питомца с ожидаемыми");
+        log.info("Отправка запроса на получение фактических данных питомца");
+
         Pet response = given()
                 .spec(REQUEST_SPECIFICATION)
                 .pathParam("petId", petId)
@@ -160,6 +184,9 @@ public class PetService {
                 .then()
                 .spec(RESPONSE_SPECIFICATION)
                 .extract().body().as(Pet.class);
+
+        log.info("Проверка соответствия фактических измененных данных питомца с ожидаемыми");
+
         Assertions.assertAll(
                 () -> assertEquals(expectedId, response.getId(),
                         "Фактический идентификатор питомца = " + response.getId()
@@ -179,6 +206,7 @@ public class PetService {
                 () -> assertEquals(expectedStatus, response.getStatus(),
                         "Фактический статус питомца = " + response.getStatus() +
                                 " не соответствует ожидаемому = " + expectedStatus));
+
         log.info("Проверка измененных данных питомца прошла успешно");
         return this;
     }
@@ -186,15 +214,18 @@ public class PetService {
     @Step("Проверка отсутствия данных о питомце с id = {petId} по запросу")
     public boolean checkNoDataAboutPet(long petId) {
         log.info(String.format("Проверка отсутствия питомца по id = %s", petId));
+
         Response response = given()
                 .spec(REQUEST_SPECIFICATION)
                 .pathParam("petId", petId)
                 .when()
                 .get(Constants.PET_BY_ID);
+
         response
                 .then()
                 .log()
                 .status();
+
         return response.getStatusCode() == 404;
     }
 }

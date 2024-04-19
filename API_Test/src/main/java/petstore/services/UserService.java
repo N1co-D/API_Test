@@ -20,21 +20,25 @@ public class UserService {
 
     private boolean checkIfUserExistByUsername(String username) {
         log.info(String.format("Проверка наличия пользователя по логину = %s", username));
+
         Response response = given()
                 .spec(REQUEST_SPECIFICATION)
                 .pathParam("username", username)
                 .when()
                 .get(Constants.USER_BY_USERNAME);
+
         response
                 .then()
                 .log()
                 .status();
+
         return response.getStatusCode() == 200;
     }
 
     @Step("Отправка запроса на получение пользователя по логину = {username}")
     public UserService getUserByUsername(String username) {
         log.info(String.format("Отправка запроса на получение данных о пользователе по логину = %s", username));
+
         given()
                 .spec(REQUEST_SPECIFICATION)
                 .pathParam("username", username)
@@ -42,6 +46,7 @@ public class UserService {
                 .get(Constants.USER_BY_USERNAME)
                 .then()
                 .spec(RESPONSE_SPECIFICATION);
+
         log.info(String.format("Получение данных о пользователе по логину = %s прошла успешно",
                 username));
         return this;
@@ -50,6 +55,7 @@ public class UserService {
     @Step("Отправка запроса на авторизацию пользователя с логином = {username}")
     public UserService login(String username, String password) {
         log.info(String.format("Отправка запроса на авторизацию пользователя с логином = %s", username));
+
         given()
                 .spec(REQUEST_SPECIFICATION)
                 .param("username", username)
@@ -58,6 +64,7 @@ public class UserService {
                 .get(Constants.USER_LOGIN)
                 .then()
                 .spec(RESPONSE_SPECIFICATION);
+
         log.info(String.format("Авторизация пользователя с логином = %s прошла успешно", username));
         return this;
     }
@@ -65,12 +72,14 @@ public class UserService {
     @Step("Отправка запроса на выход пользователя из системы")
     public UserService logout() {
         log.info("Отправка запроса на выход из системы");
+
         given()
                 .spec(REQUEST_SPECIFICATION)
                 .when()
                 .get(Constants.USER_LOGOUT)
                 .then()
                 .spec(RESPONSE_SPECIFICATION);
+
         log.info("Выход из системы произошел успешно");
         return this;
     }
@@ -78,6 +87,7 @@ public class UserService {
     @Step("Отправка запроса на удаление пользователя по логину = {username}")
     public UserService deleteUserByUsername(String username) {
         log.info(String.format("Отправка запроса на удаление пользователя с логином = %s", username));
+
         given()
                 .spec(REQUEST_SPECIFICATION)
                 .pathParam("username", username)
@@ -85,6 +95,7 @@ public class UserService {
                 .delete(Constants.USER_BY_USERNAME)
                 .then()
                 .spec(RESPONSE_SPECIFICATION);
+
         log.info(String.format("Удаление пользователя с логином = %s прошло успешно", username));
         return this;
     }
@@ -92,6 +103,7 @@ public class UserService {
     @Step("Отправка запроса на добавление списка пользователей")
     public UserService createUserList(String userListJson) {
         log.info("Отправка запроса на добавление списка пользователей");
+
         given()
                 .spec(REQUEST_SPECIFICATION)
                 .contentType(JSON)
@@ -100,6 +112,7 @@ public class UserService {
                 .post(Constants.USER_LIST)
                 .then()
                 .spec(RESPONSE_SPECIFICATION);
+
         log.info("Добавление списка пользователей прошло успешно");
         return this;
     }
@@ -107,6 +120,7 @@ public class UserService {
     @Step("Отправка запроса на добавление нового пользователя")
     public UserService createUser(String username, String userJson) {
         log.info("Отправка запроса на добавление нового пользователя");
+
         if (!checkIfUserExistByUsername(username)) {
             log.info(String.format("В текущий момент пользователь с логином = %s в базе отсутствует", username));
             given()
@@ -118,6 +132,7 @@ public class UserService {
                     .then()
                     .spec(RESPONSE_SPECIFICATION);
         }
+
         log.info("Добавление пользователя прошло успешно");
         return this;
     }
@@ -125,6 +140,7 @@ public class UserService {
     @Step("Отправка запроса на изменение данных пользователя с логином {username}")
     public UserService updateUser(String username, String userJson) {
         log.info(String.format("Отправка запроса на изменение данных пользователя с логином = %s", username));
+
         given()
                 .spec(REQUEST_SPECIFICATION)
                 .pathParam("username", username)
@@ -134,15 +150,17 @@ public class UserService {
                 .put(Constants.USER_BY_USERNAME)
                 .then()
                 .spec(RESPONSE_SPECIFICATION);
+
         log.info(String.format("Изменение данных пользователя с логином = %s прошла успешно", username));
         return this;
     }
 
-    @Step("Проверка соответствия полей firstName и email с ожидаемыми результатами = {expectedFirstName} и {expectedEmail} соответственно")
+    @Step("Проверка соответствия полей с ожидаемыми результатами")
     public UserService checkUserParameters(String username, String expectedUsername,
                                            String expectedFirstName, String expectedLastName, String expectedEmail,
                                            String expectedPassword, String expectedPhone, int expectedUserStatus) {
-        log.info("Проверка измененных данных пользователя");
+        log.info("Отправка запроса на получение фактических данных пользователя");
+
         User response = given()
                 .spec(REQUEST_SPECIFICATION)
                 .pathParam("username", username)
@@ -151,6 +169,9 @@ public class UserService {
                 .then()
                 .spec(RESPONSE_SPECIFICATION)
                 .extract().body().as(User.class);
+
+        log.info("Проверка соответствия фактических измененных данных пользователя с ожидаемыми");
+
         Assertions.assertAll(
                 () -> assertEquals(expectedUsername, response.getUsername(),
                         "Фактический логин пользователя = " + response.getUsername() +
@@ -174,6 +195,7 @@ public class UserService {
                         "Фактический статус пользователя = " + response.getUserStatus() +
                                 " не соответствует ожидаемому = " + expectedUserStatus)
         );
+
         log.info("Проверка измененных данных пользователя прошла успешно");
         return this;
     }
@@ -181,15 +203,18 @@ public class UserService {
     @Step("Проверка отсутствия данных о пользователе с логином = {username} по запросу")
     public boolean checkNoDataAboutUser(String username) {
         log.info(String.format("Проверка отсутствия заказа по username = %s", username));
+
         Response response = given()
                 .spec(REQUEST_SPECIFICATION)
                 .pathParam("username", username)
                 .when()
                 .get(Constants.USER_BY_USERNAME);
+
         response
                 .then()
                 .log()
                 .status();
+
         return response.getStatusCode() == 404;
     }
 }
