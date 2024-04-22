@@ -1,24 +1,29 @@
 package petstore.utilites;
 
-import java.io.FileInputStream;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
 import java.io.IOException;
 import java.util.Properties;
 
+@Slf4j
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class ConfProperties {
-    private final Properties properties;
+    private final static Properties PROPERTIES = new Properties();
 
-    public ConfProperties() {
+    static {
         try {
-            FileInputStream fileInputStream = new FileInputStream("src/main/resources/config.properties");
-            properties = new Properties();
-            properties.load(fileInputStream);
+            PROPERTIES.load(ConfProperties.class
+                    .getClassLoader()
+                    .getResourceAsStream("config.properties"));
         } catch (IOException e) {
-            System.out.println("Ошибка при загрузке файла!");
+            log.error("Ошибка при загрузке файла 'config.properties'!");
             throw new RuntimeException();
         }
     }
 
-    public String getProperty(String key) {
-        return properties.getProperty(key);
+    public static String getProperty(String key) {
+        return PROPERTIES.getProperty(key);
     }
 }

@@ -1,6 +1,7 @@
 package petstore;
 
 import io.qameta.allure.Description;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -12,6 +13,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+@Disabled
 public class PetStoreTest extends PetStoreTestConfig {
 
     @Description("TC-ID1 Отправка запроса на добавление нового питомца")

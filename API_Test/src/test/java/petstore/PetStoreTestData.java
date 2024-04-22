@@ -18,7 +18,7 @@ public class PetStoreTestData {
     public final static long ORDER_ID = 17031703L;
     public final static String USERNAME = "QAtester4090";
     public final static String UPDATED_USERNAME = "QAtester1703";
-    public final static List<String> PHOTO_URLS = new ArrayList<>(List.of("url1", "url2", "url3"));
+    public final static List<String> PHOTO_URLS = List.of("url1", "url2", "url3");
     public final static List<Tag> TAGS = List.of(new Tag(0L, "black"), new Tag(1L, "small"));
     public final static Category CATEGORY = new Category(0L, "dog");
 
