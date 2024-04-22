@@ -13,8 +13,7 @@ public class StoreServiceTestData {
      * TC-ID8
      */
     public static Stream<Arguments> checkAddNewOrderTestData() throws JsonProcessingException {
-        long orderId = 101101L;
-        return Stream.of(Arguments.of(orderId, orderData(orderId), orderId, 0L, 0,
+        return Stream.of(Arguments.of(101101L, orderData(101101L), 101101L, 0L, 0,
                 "2024-04-13T16:20:28.459+0000", "placed", true));
     }
 
@@ -22,16 +21,14 @@ public class StoreServiceTestData {
      * TC-ID9
      */
     public static Stream<Arguments> checkFindOrderByIdTestData() throws JsonProcessingException {
-        long orderId = 101102L;
-        return Stream.of(Arguments.of(orderId, orderData(orderId)));
+        return Stream.of(Arguments.of(101102L, orderData(101102L)));
     }
 
     /**
      * TC-ID10
      */
     public static Stream<Arguments> checkDeleteOrderByIdTestData() throws JsonProcessingException {
-        long orderId = 101103L;
-        return Stream.of(Arguments.of(orderId, orderData(orderId)));
+        return Stream.of(Arguments.of(101103L, orderData(101103L)));
     }
 
     private static String orderData(long orderId) throws JsonProcessingException {

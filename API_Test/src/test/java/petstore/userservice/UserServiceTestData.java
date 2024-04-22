@@ -5,7 +5,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.params.provider.Arguments;
 import petstore.data.user.User;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -15,9 +14,8 @@ public class UserServiceTestData {
      * TC-ID11
      */
     public static Stream<Arguments> checkCreateUserTestData() throws JsonProcessingException {
-        String username = "QAtester101";
-        return Stream.of(Arguments.of(username, userData(username), username, "Vladimir", "Ivanov",
-                "java@mail.ru", "password", "string", 0));
+        return Stream.of(Arguments.of("QAtester101", userData("QAtester101"), "QAtester101",
+                "Vladimir", "Ivanov", "java@mail.ru", "password", "string", 0));
     }
 
     /**
@@ -31,43 +29,37 @@ public class UserServiceTestData {
      * TC-ID13
      */
     public static Stream<Arguments> checkGetUserByUsernameTestData() throws JsonProcessingException {
-        String username = "QAtester102";
-        return Stream.of(Arguments.of(username, userData(username)));
+        return Stream.of(Arguments.of("QAtester102", userData("QAtester102")));
     }
 
     /**
      * TC-ID14
      */
     public static Stream<Arguments> checkLoginTestData() throws JsonProcessingException {
-        String username = "QAtester103";
-        return Stream.of(Arguments.of(username, userData(username), "password"));
+        return Stream.of(Arguments.of("QAtester103", userData("QAtester103"), "password"));
     }
 
     /**
      * TC-ID15
      */
     public static Stream<Arguments> checkUpdateUserTestData() throws JsonProcessingException {
-        String username = "QAtester104";
-        String updatedUsername = "QAtester105";
-        return Stream.of(Arguments.of(username, userData(username), "password", updatedUsername,
-                updateUserData(updatedUsername), updatedUsername, "QAtester105", "Daniil", "Markevich", "qa@test.com",
-                "password", "string", 0));
+        return Stream.of(Arguments.of("QAtester104", userData("QAtester104"), "password", "QAtester105",
+                updateUserData("QAtester105"), "QAtester105", "QAtester105", "Daniil", "Markevich",
+                "qa@test.com", "password", "string", 0));
     }
 
     /**
      * TC-ID16
      */
     public static Stream<Arguments> checkLogoutTestData() throws JsonProcessingException {
-        String username = "QAtester106";
-        return Stream.of(Arguments.of(username, userData(username), "password"));
+        return Stream.of(Arguments.of("QAtester106", userData("QAtester106"), "password"));
     }
 
     /**
      * TC-ID17
      */
     public static Stream<Arguments> checkDeleteUserByUsernameTestData() throws JsonProcessingException {
-        String username = "QAtester107";
-        return Stream.of(Arguments.of(username, userData(username)));
+        return Stream.of(Arguments.of("QAtester107", userData("QAtester107")));
     }
 
     private static String userData(String username) throws JsonProcessingException {
@@ -83,11 +75,11 @@ public class UserServiceTestData {
     }
 
     private static String userListData() throws JsonProcessingException {
-        List<User> users = new ArrayList<>();
-        users.add(new User(101101L, "Alexx", "Alex", "Petrov", "email",
-                "password", "string", 0));
-        users.add(new User(202202L, "Maxx", "Max", "Ivanov", "email",
-                "password", "string", 0));
+        List<User> users = List.of(
+                new User(101101L, "Alexx", "Alex", "Petrov", "email",
+                        "password", "string", 0),
+                new User(202202L, "Maxx", "Max", "Ivanov", "email",
+                        "password", "string", 0));
         return turnObjectIntoJson(users);
     }
 

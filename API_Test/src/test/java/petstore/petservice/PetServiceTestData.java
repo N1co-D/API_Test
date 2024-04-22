@@ -19,8 +19,7 @@ public class PetServiceTestData {
      * TC-ID1
      */
     public static Stream<Arguments> checkAddNewPetTestData() throws JsonProcessingException {
-        long petId = 101101L;
-        return Stream.of(Arguments.of(petId, petData(petId), petId, CATEGORY, "doggie",
+        return Stream.of(Arguments.of(101101L, petData(101101L), 101101L, CATEGORY, "doggie",
                 PHOTO_URLS, TAGS, "available"));
     }
 
@@ -28,33 +27,29 @@ public class PetServiceTestData {
      * TC-ID2
      */
     public static Stream<Arguments> checkFindPetByIdTestData() throws JsonProcessingException {
-        long petId = 101102L;
-        return Stream.of(Arguments.of(petId, petData(petId)));
+        return Stream.of(Arguments.of(101102L, petData(101102L)));
     }
 
     /**
      * TC-ID3
      */
     public static Stream<Arguments> checkPartialUpdatePetTestData() throws JsonProcessingException {
-        long petId = 101103L;
-        return Stream.of(Arguments.of(petId, petData(petId), "Kesha", "sold"));
+        return Stream.of(Arguments.of(101103L, petData(101103L), "Kesha", "sold"));
     }
 
     /**
      * TC-ID4
      */
     public static Stream<Arguments> checkFullUpdatePetTestData() throws JsonProcessingException {
-        long petId = 101104L;
-        return Stream.of(Arguments.of(petId, petData(petId), updatePetData(petId), petId, CATEGORY,
-                "boris", PHOTO_URLS, TAGS, "sold"));
+        return Stream.of(Arguments.of(101104L, petData(101104L), updatePetData(101104L), 101104L,
+                CATEGORY, "boris", PHOTO_URLS, TAGS, "sold"));
     }
 
     /**
      * TC-ID5
      */
     public static Stream<Arguments> checkDeletePetByIdTestData() throws JsonProcessingException {
-        long petId = 101105L;
-        return Stream.of(Arguments.of(petId, petData(petId)));
+        return Stream.of(Arguments.of(101105L, petData(101105L)));
     }
 
     private static String petData(long petId) throws JsonProcessingException {
