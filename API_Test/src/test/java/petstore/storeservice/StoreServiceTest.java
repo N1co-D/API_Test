@@ -45,4 +45,16 @@ public class StoreServiceTest extends StoreServiceTestConfig {
         assertTrue(storeService.checkNoDataAboutOrder(orderId),
                 "Заказ с заданным id = " + orderId + " не был удален");
     }
+
+    @DisplayName("TC-ID11")
+    @Description("TC-ID11 Отправка запроса на получение всех питомцев по статусу")
+    @ParameterizedTest
+    @MethodSource("petstore.storeservice.StoreServiceTestData#checkValidateJsonSchemeTestData")
+    public void checkValidateJsonScheme(long orderId, String orderJson, long idToFind, long idToValidate, String filePath) {
+        storeService
+                .placeNewOrder(orderId, orderJson)
+                .findOrderById(idToFind)
+                .validateJsonScheme(idToValidate, filePath);
+        cleanData(orderId);
+    }
 }

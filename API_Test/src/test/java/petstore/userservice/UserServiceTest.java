@@ -9,8 +9,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class UserServiceTest extends UserServiceTestConfig {
 
-    @DisplayName("TC-ID11")
-    @Description("TC-ID11 Отправка запроса на добавление нового пользователя")
+    @DisplayName("TC-ID12")
+    @Description("TC-ID12 Отправка запроса на добавление нового пользователя")
     @ParameterizedTest
     @MethodSource("petstore.userservice.UserServiceTestData#checkCreateUserTestData")
     public void checkCreateUser(String username, String userJson, String expectedUsername,
@@ -23,8 +23,8 @@ public class UserServiceTest extends UserServiceTestConfig {
         cleanData(username);
     }
 
-    @DisplayName("TC-ID12")
-    @Description("TC-ID12 Отправка запроса на добавление списка пользователей")
+    @DisplayName("TC-ID13")
+    @Description("TC-ID13 Отправка запроса на добавление списка пользователей")
     @ParameterizedTest
     @MethodSource("petstore.userservice.UserServiceTestData#checkCreateUserListTestData")
     public void checkCreateUserList(String userListJson) {
@@ -32,8 +32,8 @@ public class UserServiceTest extends UserServiceTestConfig {
                 .createUserList(userListJson);
     }
 
-    @DisplayName("TC-ID13")
-    @Description("TC-ID13 Отправка запроса на получение пользователя по логину")
+    @DisplayName("TC-ID14")
+    @Description("TC-ID14 Отправка запроса на получение пользователя по логину")
     @ParameterizedTest
     @MethodSource("petstore.userservice.UserServiceTestData#checkGetUserByUsernameTestData")
     public void checkGetUserByUsername(String username, String userJson) {
@@ -43,8 +43,8 @@ public class UserServiceTest extends UserServiceTestConfig {
         cleanData(username);
     }
 
-    @DisplayName("TC-ID14")
-    @Description("TC-ID14 Отправка запроса на авторизацию пользователя")
+    @DisplayName("TC-ID15")
+    @Description("TC-ID15 Отправка запроса на авторизацию пользователя")
     @ParameterizedTest
     @MethodSource("petstore.userservice.UserServiceTestData#checkLoginTestData")
     public void checkLogin(String username, String userJson, String password) {
@@ -54,8 +54,8 @@ public class UserServiceTest extends UserServiceTestConfig {
         cleanData(username);
     }
 
-    @DisplayName("TC-ID15")
-    @Description("TC-ID15 Отправка запроса на изменение данных пользователя")
+    @DisplayName("TC-ID16")
+    @Description("TC-ID16 Отправка запроса на изменение данных пользователя")
     @ParameterizedTest
     @MethodSource("petstore.userservice.UserServiceTestData#checkUpdateUserTestData")
     public void checkUpdateUser(String username, String userJson, String password, String updatedUsername,
@@ -71,8 +71,8 @@ public class UserServiceTest extends UserServiceTestConfig {
         cleanData(username);
     }
 
-    @DisplayName("TC-ID16")
-    @Description("TC-ID16 Отправка запроса на выход пользователя из системы")
+    @DisplayName("TC-ID17")
+    @Description("TC-ID17 Отправка запроса на выход пользователя из системы")
     @ParameterizedTest
     @MethodSource("petstore.userservice.UserServiceTestData#checkLogoutTestData")
     public void checkLogout(String username, String userJson, String password) {
@@ -83,8 +83,8 @@ public class UserServiceTest extends UserServiceTestConfig {
         cleanData(username);
     }
 
-    @DisplayName("TC-ID17")
-    @Description("TC-ID17 Отправка запроса на удаление пользователя по логину")
+    @DisplayName("TC-ID18")
+    @Description("TC-ID18 Отправка запроса на удаление пользователя по логину")
     @ParameterizedTest
     @MethodSource("petstore.userservice.UserServiceTestData#checkDeleteUserByUsernameTestData")
     public void checkDeleteUserByUsername(String username, String userJson) {
@@ -93,5 +93,18 @@ public class UserServiceTest extends UserServiceTestConfig {
                 .deleteUserByUsername(username);
         assertTrue(userService.checkNoDataAboutUser(username),
                 "Пользователь с заданным логином = " + username + " не был удален");
+    }
+
+    @DisplayName("TC-ID19")
+    @Description("TC-ID19 Отправка запроса на получение всех питомцев по статусу")
+    @ParameterizedTest
+    @MethodSource("petstore.userservice.UserServiceTestData#checkValidateJsonSchemeTestData")
+    public void checkValidateJsonScheme(String username, String userJson, String usernameToFind,
+                                        String usernameToValidate, String filePath) {
+        userService
+                .createUser(username, userJson)
+                .getUserByUsername(usernameToFind)
+                .validateJsonScheme(usernameToValidate, filePath);
+        cleanData(username);
     }
 }

@@ -11,7 +11,7 @@ import java.util.stream.Stream;
 public class UserServiceTestData {
 
     /**
-     * TC-ID11
+     * TC-ID12
      */
     public static Stream<Arguments> checkCreateUserTestData() throws JsonProcessingException {
         return Stream.of(Arguments.of("QAtester101", userData("QAtester101"), "QAtester101",
@@ -19,28 +19,28 @@ public class UserServiceTestData {
     }
 
     /**
-     * TC-ID12
+     * TC-ID13
      */
     public static Stream<Arguments> checkCreateUserListTestData() throws JsonProcessingException {
         return Stream.of(Arguments.of(userListData()));
     }
 
     /**
-     * TC-ID13
+     * TC-ID14
      */
     public static Stream<Arguments> checkGetUserByUsernameTestData() throws JsonProcessingException {
         return Stream.of(Arguments.of("QAtester102", userData("QAtester102")));
     }
 
     /**
-     * TC-ID14
+     * TC-ID15
      */
     public static Stream<Arguments> checkLoginTestData() throws JsonProcessingException {
         return Stream.of(Arguments.of("QAtester103", userData("QAtester103"), "password"));
     }
 
     /**
-     * TC-ID15
+     * TC-ID16
      */
     public static Stream<Arguments> checkUpdateUserTestData() throws JsonProcessingException {
         return Stream.of(Arguments.of("QAtester104", userData("QAtester104"), "password", "QAtester105",
@@ -49,17 +49,25 @@ public class UserServiceTestData {
     }
 
     /**
-     * TC-ID16
+     * TC-ID17
      */
     public static Stream<Arguments> checkLogoutTestData() throws JsonProcessingException {
         return Stream.of(Arguments.of("QAtester106", userData("QAtester106"), "password"));
     }
 
     /**
-     * TC-ID17
+     * TC-ID18
      */
     public static Stream<Arguments> checkDeleteUserByUsernameTestData() throws JsonProcessingException {
         return Stream.of(Arguments.of("QAtester107", userData("QAtester107")));
+    }
+
+    /**
+     * TC-ID19
+     */
+    public static Stream<Arguments> checkValidateJsonSchemeTestData() throws JsonProcessingException {
+        return Stream.of(Arguments.of("QAtester108", userData("QAtester108"), "QAtester108", "QAtester108",
+                "src/main/java/petstore/schemes/userscheme.json"));
     }
 
     private static String userData(String username) throws JsonProcessingException {

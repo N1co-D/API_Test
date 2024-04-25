@@ -77,10 +77,23 @@ public class PetServiceTest extends PetServiceTestConfig {
                 "Питомец с заданным id = " + petId + " не был удален");
     }
 
+    @DisplayName("TC-ID6")
     @Description("TC-ID6 Отправка запроса на получение всех питомцев по статусу")
     @ParameterizedTest
     @ValueSource(strings = {"available", "pending", "sold"})
     public void checkFindPetByStatus(String status) {
         petService.findPetByStatus(status);
+    }
+
+    @DisplayName("TC-ID7")
+    @Description("TC-ID7 Отправка запроса на получение всех питомцев по статусу")
+    @ParameterizedTest
+    @MethodSource("petstore.petservice.PetServiceTestData#checkValidateJsonSchemeTestData")
+    public void checkValidateJsonScheme(long petId, String petJson, long idToFind, long idToValidate, String filePath) {
+        petService
+                .addNewPet(petId, petJson)
+                .findPetById(idToFind)
+                .validateJsonScheme(idToValidate, filePath);
+        cleanData(petId);
     }
 }
