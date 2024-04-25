@@ -50,11 +50,11 @@ public class StoreServiceTest extends StoreServiceTestConfig {
     @Description("TC-ID11 Отправка запроса на получение всех питомцев по статусу")
     @ParameterizedTest
     @MethodSource("petstore.storeservice.StoreServiceTestData#checkValidateJsonSchemeTestData")
-    public void checkValidateJsonScheme(long orderId, String orderJson, long idToFind, long idToValidate, String filePath) {
+    public void checkValidateJsonScheme(long orderId, String orderJson, String filePath) {
         storeService
                 .placeNewOrder(orderId, orderJson)
-                .findOrderById(idToFind)
-                .validateJsonScheme(idToValidate, filePath);
+                .findOrderById(orderId)
+                .validateJsonScheme(orderId, filePath);
         cleanData(orderId);
     }
 }

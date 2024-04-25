@@ -223,7 +223,8 @@ public class UserService {
 
     @Step("Проверка json-схемы пользователя в теле ответа по логину = {username}")
     public UserService validateJsonScheme(String username, String filePath) {
-        log.info(String.format("Отправка запроса для проверки json-схемы пользователя в теле ответа по логину = %s", username));
+        log.info(String.format("Отправка запроса для проверки json-схемы пользователя в теле ответа по логину = %s",
+                username));
 
         given()
                 .spec(REQUEST_SPECIFICATION)
@@ -235,7 +236,8 @@ public class UserService {
                 .assertThat()
                 .body(matchesJsonSchema(new File(filePath)));
 
-        log.info(String.format("Проверка json-схемы пользователя в теле ответа по логину = %s прошла успешно", username));
+        log.info(String.format("Проверка json-схемы пользователя в теле ответа по логину = %s прошла успешно",
+                username));
         return this;
     }
 }

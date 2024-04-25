@@ -176,7 +176,8 @@ public class PetService {
 
     @Step("Проверка соответствия полей с ожидаемыми результатами")
     public PetService checkPetParameters(long petId, long expectedId, Category expectedCategory, String expectedName,
-                                         List<String> expectedPhotoUrls, List<Tag> expectedTags, String expectedStatus) {
+                                         List<String> expectedPhotoUrls, List<Tag> expectedTags,
+                                         String expectedStatus) {
         log.info("Отправка запроса на получение фактических данных питомца");
 
         Pet response = given()

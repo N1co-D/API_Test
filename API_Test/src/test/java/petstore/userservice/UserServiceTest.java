@@ -59,14 +59,14 @@ public class UserServiceTest extends UserServiceTestConfig {
     @ParameterizedTest
     @MethodSource("petstore.userservice.UserServiceTestData#checkUpdateUserTestData")
     public void checkUpdateUser(String username, String userJson, String password, String updatedUsername,
-                                String updateUserJson, String updatedUsernameToCheck, String expectedUsername,
-                                String expectedFirstName, String expectedLastName, String expectedEmail,
-                                String expectedPassword, String expectedPhone, int expectedUserStatus) {
+                                String updateUserJson, String expectedUsername, String expectedFirstName,
+                                String expectedLastName, String expectedEmail, String expectedPassword,
+                                String expectedPhone, int expectedUserStatus) {
         userService
                 .createUser(username, userJson)
                 .login(username, password)
                 .updateUser(updatedUsername, updateUserJson)
-                .checkUserParameters(updatedUsernameToCheck, expectedUsername, expectedFirstName,
+                .checkUserParameters(updatedUsername, expectedUsername, expectedFirstName,
                         expectedLastName, expectedEmail, expectedPassword, expectedPhone, expectedUserStatus);
         cleanData(username);
     }
@@ -99,12 +99,11 @@ public class UserServiceTest extends UserServiceTestConfig {
     @Description("TC-ID19 Отправка запроса на получение всех питомцев по статусу")
     @ParameterizedTest
     @MethodSource("petstore.userservice.UserServiceTestData#checkValidateJsonSchemeTestData")
-    public void checkValidateJsonScheme(String username, String userJson, String usernameToFind,
-                                        String usernameToValidate, String filePath) {
+    public void checkValidateJsonScheme(String username, String userJson, String filePath) {
         userService
                 .createUser(username, userJson)
-                .getUserByUsername(usernameToFind)
-                .validateJsonScheme(usernameToValidate, filePath);
+                .getUserByUsername(username)
+                .validateJsonScheme(username, filePath);
         cleanData(username);
     }
 }

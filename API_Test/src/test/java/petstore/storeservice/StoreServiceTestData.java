@@ -35,7 +35,7 @@ public class StoreServiceTestData {
      * TC-ID11
      */
     public static Stream<Arguments> checkValidateJsonSchemeTestData() throws JsonProcessingException {
-        return Stream.of(Arguments.of(101104L, orderData(101104L), 101104L, 101104L,
+        return Stream.of(Arguments.of(101104L, orderData(101104L),
                 "src/main/java/petstore/schemes/orderscheme.json"));
     }
 

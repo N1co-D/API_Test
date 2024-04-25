@@ -43,8 +43,8 @@ public class UserServiceTestData {
      * TC-ID16
      */
     public static Stream<Arguments> checkUpdateUserTestData() throws JsonProcessingException {
-        return Stream.of(Arguments.of("QAtester104", userData("QAtester104"), "password", "QAtester105",
-                updateUserData("QAtester105"), "QAtester105", "QAtester105", "Daniil", "Markevich",
+        return Stream.of(Arguments.of("QAtester104", userData("QAtester104"), "password",
+                "QAtester105", updateUserData("QAtester105"), "QAtester105", "Daniil", "Markevich",
                 "qa@test.com", "password", "string", 0));
     }
 
@@ -66,7 +66,7 @@ public class UserServiceTestData {
      * TC-ID19
      */
     public static Stream<Arguments> checkValidateJsonSchemeTestData() throws JsonProcessingException {
-        return Stream.of(Arguments.of("QAtester108", userData("QAtester108"), "QAtester108", "QAtester108",
+        return Stream.of(Arguments.of("QAtester108", userData("QAtester108"),
                 "src/main/java/petstore/schemes/userscheme.json"));
     }
 

@@ -56,7 +56,7 @@ public class PetServiceTestData {
      * TC-ID7
      */
     public static Stream<Arguments> checkValidateJsonSchemeTestData() throws JsonProcessingException {
-        return Stream.of(Arguments.of(101106L, petData(101106L), 101106L, 101106L,
+        return Stream.of(Arguments.of(101106L, petData(101106L),
                 "src/main/java/petstore/schemes/petscheme.json"));
     }
 
