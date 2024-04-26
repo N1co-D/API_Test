@@ -52,6 +52,14 @@ public class PetServiceTestData {
         return Stream.of(Arguments.of(101105L, petData(101105L)));
     }
 
+    /**
+     * TC-ID7
+     */
+    public static Stream<Arguments> checkValidateJsonSchemeTestData() throws JsonProcessingException {
+        return Stream.of(Arguments.of(101106L, petData(101106L),
+                "src/main/java/petstore/schemes/petscheme.json"));
+    }
+
     private static String petData(long petId) throws JsonProcessingException {
         Pet pet = new Pet(petId, CATEGORY, "doggie", PHOTO_URLS, TAGS, "available");
         return turnObjectIntoJson(pet);

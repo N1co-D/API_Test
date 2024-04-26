@@ -9,8 +9,11 @@ import org.junit.jupiter.api.Assertions;
 import petstore.data.order.Order;
 import petstore.specs.Specification;
 
+import java.io.File;
+
 import static io.restassured.RestAssured.given;
 import static io.restassured.http.ContentType.JSON;
+import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchema;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @Slf4j
@@ -159,5 +162,23 @@ public class StoreService {
                 .status();
 
         return response.getStatusCode() == 404;
+    }
+
+    @Step("Проверка json-схемы заказа в теле ответа по id = {orderId}")
+    public StoreService validateJsonScheme(long orderId, String filePath) {
+        log.info(String.format("Отправка запроса для проверки json-схемы заказа в теле ответа по id = %s", orderId));
+
+        given()
+                .spec(REQUEST_SPECIFICATION)
+                .pathParam("orderId", orderId)
+                .when()
+                .get(Constants.ORDER_ID)
+                .then()
+                .spec(RESPONSE_SPECIFICATION)
+                .assertThat()
+                .body(matchesJsonSchema(new File(filePath)));
+
+        log.info(String.format("Проверка json-схемы заказа в теле ответа по id = %s прошла успешно", orderId));
+        return this;
     }
 }

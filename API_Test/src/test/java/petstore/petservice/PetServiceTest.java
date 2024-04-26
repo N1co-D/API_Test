@@ -18,8 +18,9 @@ public class PetServiceTest extends PetServiceTestConfig {
     @Description("TC-ID1 Отправка запроса на добавление нового питомца")
     @ParameterizedTest
     @MethodSource("petstore.petservice.PetServiceTestData#checkAddNewPetTestData")
-    public void checkAddNewPet(long petId, String petJson, long expectedId, Category expectedCategory, String expectedName,
-                               List<String> expectedPhotoUrls, List<Tag> expectedTags, String expectedStatus) {
+    public void checkAddNewPet(long petId, String petJson, long expectedId, Category expectedCategory,
+                               String expectedName, List<String> expectedPhotoUrls, List<Tag> expectedTags,
+                               String expectedStatus) {
         petService
                 .addNewPet(petId, petJson)
                 .checkPetParameters(petId, expectedId, expectedCategory, expectedName,
@@ -54,9 +55,9 @@ public class PetServiceTest extends PetServiceTestConfig {
     @Description("TC-ID4 Отправка запроса на изменение данных о питомце")
     @ParameterizedTest
     @MethodSource("petstore.petservice.PetServiceTestData#checkFullUpdatePetTestData")
-    public void checkFullUpdatePet(long petId, String petJson, String updatePetJson, long expectedId, Category expectedCategory,
-                                   String expectedName, List<String> expectedPhotoUrls, List<Tag> expectedTags,
-                                   String expectedStatus) {
+    public void checkFullUpdatePet(long petId, String petJson, String updatePetJson, long expectedId,
+                                   Category expectedCategory, String expectedName, List<String> expectedPhotoUrls,
+                                   List<Tag> expectedTags, String expectedStatus) {
         petService
                 .addNewPet(petId, petJson)
                 .fullUpdatePet(updatePetJson)
@@ -77,10 +78,23 @@ public class PetServiceTest extends PetServiceTestConfig {
                 "Питомец с заданным id = " + petId + " не был удален");
     }
 
+    @DisplayName("TC-ID6")
     @Description("TC-ID6 Отправка запроса на получение всех питомцев по статусу")
     @ParameterizedTest
     @ValueSource(strings = {"available", "pending", "sold"})
     public void checkFindPetByStatus(String status) {
         petService.findPetByStatus(status);
+    }
+
+    @DisplayName("TC-ID7")
+    @Description("TC-ID7 Отправка запроса на получение всех питомцев по статусу")
+    @ParameterizedTest
+    @MethodSource("petstore.petservice.PetServiceTestData#checkValidateJsonSchemeTestData")
+    public void checkValidateJsonScheme(long petId, String petJson, String filePath) {
+        petService
+                .addNewPet(petId, petJson)
+                .findPetById(petId)
+                .validateJsonScheme(petId, filePath);
+        cleanData(petId);
     }
 }

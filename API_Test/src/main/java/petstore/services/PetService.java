@@ -11,10 +11,12 @@ import petstore.data.pet.Pet;
 import petstore.data.pet.Tag;
 import petstore.specs.Specification;
 
+import java.io.File;
 import java.util.List;
 
 import static io.restassured.RestAssured.given;
 import static io.restassured.http.ContentType.JSON;
+import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchema;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @Slf4j
@@ -174,7 +176,8 @@ public class PetService {
 
     @Step("Проверка соответствия полей с ожидаемыми результатами")
     public PetService checkPetParameters(long petId, long expectedId, Category expectedCategory, String expectedName,
-                                         List<String> expectedPhotoUrls, List<Tag> expectedTags, String expectedStatus) {
+                                         List<String> expectedPhotoUrls, List<Tag> expectedTags,
+                                         String expectedStatus) {
         log.info("Отправка запроса на получение фактических данных питомца");
 
         Pet response = given()
@@ -228,5 +231,23 @@ public class PetService {
                 .status();
 
         return response.getStatusCode() == 404;
+    }
+
+    @Step("Проверка json-схемы питомца в теле ответа по id = {petId}")
+    public PetService validateJsonScheme(long petId, String filePath) {
+        log.info(String.format("Отправка запроса для проверки json-схемы питомца в теле ответа по id = %s", petId));
+
+        given()
+                .spec(REQUEST_SPECIFICATION)
+                .pathParam("petId", petId)
+                .when()
+                .get(Constants.PET_BY_ID)
+                .then()
+                .spec(RESPONSE_SPECIFICATION)
+                .assertThat()
+                .body(matchesJsonSchema(new File(filePath)));
+
+        log.info(String.format("Проверка json-схемы питомца в теле ответа по id = %s прошла успешно", petId));
+        return this;
     }
 }

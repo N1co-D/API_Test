@@ -31,6 +31,14 @@ public class StoreServiceTestData {
         return Stream.of(Arguments.of(101103L, orderData(101103L)));
     }
 
+    /**
+     * TC-ID11
+     */
+    public static Stream<Arguments> checkValidateJsonSchemeTestData() throws JsonProcessingException {
+        return Stream.of(Arguments.of(101104L, orderData(101104L),
+                "src/main/java/petstore/schemes/orderscheme.json"));
+    }
+
     private static String orderData(long orderId) throws JsonProcessingException {
         Order order = new Order(orderId, 0L, 0, "2024-04-13T16:20:28.459Z",
                 "placed", true);
